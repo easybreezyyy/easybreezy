@@ -1,4 +1,4 @@
-package quiz.awt.event;
+package quiz.awt.event01;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -30,16 +30,20 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 public class CMSManager extends Frame implements FocusListener, ItemListener, ActionListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	//---------------Memberinfo-------------------//
+	//---------------Member info-------------------//
 		private MemberVO member = new MemberVO();
 		private Map<String, MemberVO> map = new HashMap<>();
+		
 		
 	
 	//-----------------MENU------------------------//
@@ -87,7 +91,7 @@ public class CMSManager extends Frame implements FocusListener, ItemListener, Ac
 		private Label glb5 = new Label("취      미 :", Label.CENTER);
 
 		//------------------------Dialog-------------------------------//
-		private Dialog dialog = new Dialog(this,"버전 정보",false);
+		private Dialog dialog = new Dialog(this,"버전 정보",true);
 		private Label dlabel = new Label("Customer Manager Version 1.0",Label.CENTER);
 		private Button dbt = new Button("확인");
 		
@@ -96,7 +100,7 @@ public class CMSManager extends Frame implements FocusListener, ItemListener, Ac
 		public CMSManager() {
 			super("Customer Manager event ver.");
 			setEvent();
-			//setDialog();
+			setDialog();
 			setMenu();
 			buildGUI();
 			addWindowListener(new WindowAdapter() {
@@ -106,12 +110,32 @@ public class CMSManager extends Frame implements FocusListener, ItemListener, Ac
 			});
 		}
 		
+		//멤버 추가
 		private void insert(MemberVO member) {
 			map.put(member.getName(), member);
 		}
 		
+		//화면 초기화
+		private void cls() {
+			tf1.setText(""); tf2.setText("");
+			tf3.setText(""); tf4.setText("");
+			tf5.setText("");
+			
+			cho.select(0);
+			man.setState(true);
+			for(int i=0; i<hobby.length; i++)
+		        cb[i].setState(false);
+			ta.setText("");
+			tf1.requestFocus();
+		}
 		
-		
+		private void setEditable(boolean state) {
+			tf1.setEditable(state);
+			tf2.setEditable(state);
+			tf3.setEditable(state);
+			man.setEnabled(state); 		woman.setEnabled(state);
+		}
+
 		private void setEvent() {
 			tf1.addActionListener(this);
 			tf1.addKeyListener(this);
@@ -172,15 +196,14 @@ public class CMSManager extends Frame implements FocusListener, ItemListener, Ac
 			Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
 			Dimension my = dialog.getSize();
 			dialog.setLocation(scr.width/2-my.width/2, scr.height/2-my.height/2);
-			dialog.setVisible(true);
 			
-			/*
+			
 			addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent e) {
-					
+					dialog.setVisible(false);
 				}
 			});
-			*/
+			
 		}
 
 		/**
@@ -239,7 +262,7 @@ public class CMSManager extends Frame implements FocusListener, ItemListener, Ac
 			Panel panal = new Panel(new BorderLayout(3,3));		//개인정보분석 패널
 				panal.add("North",lb3);		panal.add("Center",ta);
 			
-			Panel wrapper = new Panel(new BorderLayout());		//패널 전체를 담을 레이아웃
+			Panel wrapper = new Panel(new BorderLayout(3,3));		//패널 전체를 담을 레이아웃
 				wrapper.add("Center",pinput);
 				wrapper.add("East",plist);
 				wrapper.add("South",panal);
@@ -253,7 +276,7 @@ public class CMSManager extends Frame implements FocusListener, ItemListener, Ac
 			setLocation(scr.width/2-my.width/2, scr.height/2-my.height/2);
 			
 			setButton(true);
-			setResizable(false);
+			//setResizable(false);
 			setVisible(true);
 			
 		}
@@ -261,75 +284,205 @@ public class CMSManager extends Frame implements FocusListener, ItemListener, Ac
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==tf1)
+		
+		if(e.getSource()==tf1)			
 			tf2.requestFocus();
 		
+		//등록버튼 눌렀을 때
 		if(e.getSource()==addbt) {
-			ta.setText("		성공적으로 등록 되었습니다.");
-			li.add(tf1.getText());
-			MemberVO member = new MemberVO(tf1.getText(),tf2.getText()+tf3.getText(),
-					cho.getSelectedItem()+tf4.getText()+tf5.getText(),"남성","");		//취미 모르겠어!!!
-			insert(member);
-			
-			tf1.setText(""); tf2.setText("");
-			tf3.setText(""); tf4.setText("");
-			tf5.setText("");
-			
-			cho.select(0);
-			
-			if(!man.getState()) {			//여자라면 여자로 저장하고 남성으로 버튼 위치 조정
-				member.setGender("여성");
-				man.setState(true);
-			}
-			
+			String name = tf1.getText().trim();
+			if(name.trim().length()==0) return;
+			String id = tf2.getText() + tf3.getText();
+			if(id.trim().length()==0) return;
+			String num1 = cho.getSelectedItem();
+			String num2 = tf4.getText().trim();
+			if(num2.trim().length()==0) return;
+			String num3 = tf5.getText().trim();
+			if(num3.trim().length()==0) return;
+			String gender = cg.getSelectedCheckbox().getLabel();
+			String hb = "";
 			for(int i=0; i<hobby.length; i++) {
-				if(cb[i].getState()==true) {
-					cb[i].setState(false);
+				if(cb[i].getState()) {
+					hb += cb[i].getLabel() + "/";
 				}
 			}
+			if(hb.length()!=0) {
+				hb = hb.substring(0, hb.length()-1);		//맨마지막의  / 제거
+			}else {
+				hb = "없음";
+			}
 			
+			MemberVO member = new MemberVO(name,id,num1,num2,num3,gender,hb);
+			insert(member);
+			System.out.println(member.toString());
 			
+			li.add(tf1.getText().trim());
+			cls();
+			ta.setText("\n\t\t성공적으로 등록 되었습니다.");
+			return;
 		}
+		
+		//분석 버튼
+		if(e.getSource()==analbt) {
 			
-			
+			String memberinfo = ""; 		//ta에 띄울 문자열
+			String id1 = tf2.getText().trim();
+	        String id2 = tf3.getText().trim();
+	        int[] id = new int[13];
+	        for(int i=0; i<id.length; i++) {
+	           if(i < 6)
+	              id[i] = id1.charAt(i) - 48;
+	           else
+	              id[i] = id2.charAt(i-6) - '0';
+	        }
+	        
+	        double j = 2.0;
+	        double hap = 0;
+
+	         for (int i = 0; i < id.length-1; i++) {		//주민번호 검증
+	            if(i == 8)
+	            	j = 2.0f;
+	        	hap += id[i] * j;
+	        	j++;
+	         }
+
+	         double temp = 11.0f * (int)(hap / 11.0f) + 11.0f - hap;
+	         double total = temp - 10.0f * ((int) (temp / 10.0f));
+	         
+	         if ((int)total == id[12]) {
+	        	int year;
+	 	        int month;
+	 	        int day;
+	 	        
+	 	       switch(id[6]) {
+				case 1 :
+				case 2 : 
+					year = 1900; break;
+				case 3 :
+				case 4 : 
+					year = 2000; break;
+				default : 
+					year = 1800; 
+				}//연도 설정
+	 	        year = year + id[0] * 10 + id[1];
+	 	        
+	 	        if(id[2] == 0)
+	 	        	month = id[3];
+	 	        else
+	 	        	month = id[2] * 10 + id[3];
+
+	 	        if(id[4] == 0)
+	 	        	day = id[5];
+	 	        else
+	 	        	day = id[4] * 10 + id[5];
+	 	        
+	 	        Calendar now = Calendar.getInstance();
+	 	        int thisyear = now.get(Calendar.YEAR);
+	 	        int age = thisyear - year;
+	 			
+	 	        MemberVO member = map.get(li.getSelectedItem());
+	 			memberinfo = "\n\t\t이름 : " + member.getName() + 
+	 					"\n\n\t\t생년월일 : " + year + "년 " + month + "월" + day + "일"
+	 					+ "\n\n\t\t나이 : " + age
+	 					+ "\n\n\t\t성별 : " + member.getGender()
+	 					+ "\n\n\t\t취미 : " + member.getHobby();
+	         }else 
+	        	 memberinfo = "\n\t\t잘못된 주민번호입니다.\n\t\t주민번호를 수정해주세요.";
+	       
+			ta.setText(memberinfo);
+			return;
+		}
+		
+		
+		//입력모드 눌렀을 때
+		if(e.getSource()==initbt) {
+			cls();
+			setEditable(true);
+			setButton(true);
+			return;
+		}
+		
+		//삭제버튼 눌렀을 때
+		if(e.getSource()==delbt) {
+			String imsi = li.getSelectedItem();
+			map.remove(imsi);
+			li.remove(imsi);
+			cls();
+			setButton(true);
+			setEditable(true);
+			ta.setText("\n\t\t성공적으로 삭제되었습니다.");
+			return;
+		}
+		
+		if(e.getSource()==editbt) {
+			MemberVO member = map.get(li.getSelectedItem());
+			String num1 = cho.getSelectedItem();
+			String num2 = tf4.getText().trim();
+			if(num2.trim().length()==0) return;
+			String num3 = tf5.getText().trim();
+			if(num3.trim().length()==0) return;
+			String hb = "";
+			for(int i=0; i<hobby.length; i++) {
+				if(cb[i].getState()) {
+					hb += cb[i].getLabel() + "/";
+				}
+			}
+			if(hb.length()!=0) {
+				hb = hb.substring(0, hb.length()-1);		//맨마지막의  / 제거
+			}else {
+				hb = "없음";
+			}
+			member.setNum1(num1); member.setNum2(num2); member.setNum3(num3);
+			member.setHobby(hb);
+			setButton(true);
+	        setEditable(true);
+	        cls();
+	        ta.setText("\n\t\t성공적으로 수정되었습니다.");
+	        tf1.requestFocus();
+			return;
+		}
 
 	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
+		if(e.getSource()==cho) {
+			tf4.requestFocus();
+			return;
+		}
+		
+		//리스트 선택
 		if(e.getSource()==li) {
 			
 			String temp = li.getSelectedItem();
 			MemberVO member = map.get(temp);
-			
+			StringTokenizer tokens = new StringTokenizer(member.getHobby(), "/");
+
 			tf1.setText(member.getName());
 			tf2.setText(member.getId().substring(0,6));
-			tf3.setText(member.getId().substring(6,13));
-			if(member.getGender()=="여성")
+			tf3.setText(member.getId().substring(6));
+			cho.select(member.getNum1());
+			tf4.setText(member.getNum2());
+			tf5.setText(member.getNum3());
+			
+			if(member.getGender().equals("여성"));
 				woman.setState(true);
 			
+			while(tokens.hasMoreTokens()) {
+				String imsi = tokens.nextToken();
+				for(int i = 0; i < cb.length; i++) {
+					if(cb[i].getLabel().equals(imsi))
+						cb[i].setState(true);
+				}
+			}
+			setButton(false);
+			setEditable(false);
 			
-			
-			tf1.setEditable(false);
-			tf2.setEditable(false);
-			tf3.setEditable(false);
-			man.setEnabled(false); woman.setEnabled(false);
-			
-			addbt.setEnabled(false);
-			analbt.setEnabled(true);	editbt.setEnabled(true);
-			delbt.setEnabled(true);		initbt.setEnabled(true);
-		}
-			
-
+		}//end list
 	}
 
 	@Override
-	public void focusGained(FocusEvent e) {
-		
-
-	}
-	
-	
+	public void focusGained(FocusEvent e) {}
 
 	@Override
 	public void focusLost(FocusEvent e) {}
@@ -350,8 +503,7 @@ public class CMSManager extends Frame implements FocusListener, ItemListener, Ac
 			if(tf4.getText().trim().length()==4)
 				tf5.requestFocus();
 		}
-		
-		
+	
 	}
 	
 	@Override
@@ -361,7 +513,6 @@ public class CMSManager extends Frame implements FocusListener, ItemListener, Ac
 	public void keyPressed(KeyEvent e) {}
 
 	
-
 	public static void main(String[] args) {
 		new CMSManager();
 
