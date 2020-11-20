@@ -1,7 +1,11 @@
 package quiz.awt.event01;
 
-public class MemberVO {
+import java.io.Serializable;
 
+public class MemberVO implements Serializable{
+
+
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String id;
 	private String num1;
