@@ -6,14 +6,17 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-
+/**
+ * 항시 이게 기본 와꾸!!!
+ *
+ */
 public class Main extends Application {
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception{
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("LoginPane.fxml"));
 			Scene scene = new Scene(root);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setTitle("main page");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

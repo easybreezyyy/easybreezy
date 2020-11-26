@@ -9,15 +9,33 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="824.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="824.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <children>
       <ImageView fitHeight="824.0" fitWidth="1300.0" layoutX="309.0" layoutY="161.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../image/matisse.jpg" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="430.0" layoutY="179.0" prefHeight="448.0" prefWidth="441.0" style="-fx-background-color: #212121;">
+      <AnchorPane fx:id="welcomepn" layoutX="431.0" layoutY="178.0" prefHeight="448.0" prefWidth="441.0" style="-fx-background-color: #212121;">
+         <children>
+            <Label layoutX="91.0" layoutY="14.0" prefHeight="155.0" prefWidth="275.0" text="Welcome!" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="55.0" />
+               </font>
+            </Label>
+            <Button fx:id="gotItbt" layoutX="104.0" layoutY="331.0" mnemonicParsing="false" onAction="#gotIt" prefHeight="64.0" prefWidth="234.0" style="-fx-background-color: #7c4dff; -fx-background-radius: 90;" text="Got it" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="33.0" />
+               </font>
+            </Button>
+            <Label layoutX="123.0" layoutY="185.0" prefHeight="78.0" prefWidth="196.0" text="Can I make it?" textFill="WHITE">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="loginpn" layoutX="430.0" layoutY="179.0" prefHeight="448.0" prefWidth="441.0" style="-fx-background-color: #212121;">
          <children>
             <Label layoutX="167.0" layoutY="32.0" prefHeight="84.0" prefWidth="107.0" text="Login" textFill="WHITE">
                <font>
@@ -25,7 +43,7 @@
                </font>
             </Label>
             <AnchorPane layoutX="167.0" layoutY="100.0" prefHeight="6.0" prefWidth="100.0" style="-fx-background-color: #7c4dff;" />
-            <Button layoutX="77.0" layoutY="323.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #7c4dff; -fx-background-radius: 90;" text="Login" textFill="WHITE">
+            <Button fx:id="loginbt" layoutX="77.0" layoutY="323.0" mnemonicParsing="false" onAction="#login" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #7c4dff; -fx-background-radius: 90;" text="Login" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="18.0" />
                </font>
@@ -40,7 +58,7 @@
                   <Image url="@../image/icons8_contacts_32px_1.png" />
                </image>
             </ImageView>
-            <JFXTextField focusColor="WHITE" UnFocusColor="WHITE" layoutX="133.0" layoutY="159.0" prefHeight="29.0" prefWidth="228.0" promptText="Username" />
+            <JFXTextField UnFocusColor="WHITE" focusColor="WHITE" layoutX="133.0" layoutY="159.0" prefHeight="29.0" prefWidth="228.0" promptText="Username" />
             <JFXPasswordField focusColor="WHITE" layoutX="133.0" layoutY="230.0" prefHeight="29.0" prefWidth="228.0" promptText="Password" />
          </children>
       </AnchorPane>
