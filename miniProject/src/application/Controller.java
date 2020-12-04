@@ -19,7 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-public class SampleController implements Initializable {
+public class Controller implements Initializable {
+
 
 	// ----------------Member-----------------//
 	private Member member = new Member();
@@ -40,7 +41,7 @@ public class SampleController implements Initializable {
 	@FXML
 	private JFXComboBox<String> storecb;
 	private ObservableList<String> storeList = 
-			FXCollections.observableArrayList("Seogyo", "Dosan", "Seongsu", "Hannam","Headquater");
+			FXCollections.observableArrayList("Seogyo", "Dosan", "Seongsu", "Hannam","Headquarters");
 
 	@FXML
 	private JFXComboBox<String> positioncb;
@@ -64,6 +65,22 @@ public class SampleController implements Initializable {
 	@FXML
 	private JFXPasswordField confirmPwdtf;
 
+	
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		positioncb.setItems(positionList);
+		storecb.setItems(storeList);
+		signinbt.setOnAction(event -> handleSignin(event));
+		registerbt.setOnAction(event -> handleRegister(event));
+		backtosigninbt.setOnAction(event -> handleback(event));
+		registerbt2.setOnAction(event -> handleRegister2(event));
+
+	}
+	
+	
+	
+	
 	@FXML
 	public void handleRegister(ActionEvent event) {
 		signinpn.setVisible(false);
@@ -76,6 +93,7 @@ public class SampleController implements Initializable {
 		// String store = storecb.getSelectionModel().getSelectedItem();
 		// String password = passwordtf.getText();
 		// String comfirmPassword = confirmPwdtf.getText();
+		
 
 	}
 
@@ -90,16 +108,7 @@ public class SampleController implements Initializable {
 		signinpn.setVisible(true);
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		positioncb.setItems(positionList);
-		storecb.setItems(storeList);
-		signinbt.setOnAction(event -> handleSignin(event));
-		registerbt.setOnAction(event -> handleRegister(event));
-		backtosigninbt.setOnAction(event -> handleback(event));
-		registerbt2.setOnAction(event -> handleRegister2(event));
-
-	}
+	
 
 	public void insert(Member member) {
 		map.put(member.getUsername(), member);

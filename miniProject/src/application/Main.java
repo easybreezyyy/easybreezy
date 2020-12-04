@@ -1,5 +1,5 @@
 package application;
-	
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -8,12 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
 /**
- * 항시 이게 기본 와꾸!!!
- *
+ * Inventory Management System
+ * 
  */
 public class Main extends Application {
+
 	@Override
-	public void start(Stage primaryStage) throws Exception{
+	public void start(Stage primaryStage) throws Exception {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("LoginPane.fxml"));
 			Scene scene = new Scene(root);
@@ -21,13 +22,11 @@ public class Main extends Application {
 			primaryStage.getIcons().add(new Image("image/icons8_j_50px.png"));
 			primaryStage.setScene(scene);
 			primaryStage.show();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
