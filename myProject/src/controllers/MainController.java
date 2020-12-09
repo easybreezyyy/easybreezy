@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 public class MainController implements Initializable {
@@ -51,7 +52,7 @@ public class MainController implements Initializable {
 	private JFXButton btRegister;
 
 	@FXML
-	private JFXButton btIdCheck;
+	private Button btIdCheck;
 
 	@FXML
 	private JFXTextField tfId;

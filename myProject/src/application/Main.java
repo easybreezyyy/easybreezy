@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -12,6 +13,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
+			System.setProperty("prism.lcdtext", "false");
+			Font.loadFont(getClass().getResourceAsStream("/resources/NanumSquareR.ttf"), 15);
+
 			Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("Our Closet");
@@ -23,16 +27,7 @@ public class Main extends Application {
 		}
 	}
 
-//	public void switchtoAdmin() throws Exception {
-//		try {
-//			Parent admin = FXMLLoader.load(getClass().getResource("AdminMain.fxml"));
-//			Scene scene2 = new Scene(admin); 
-//			window.setScene(scene2);
-//			window.show();
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+
 	
 	
 	public static void main(String[] args) {
