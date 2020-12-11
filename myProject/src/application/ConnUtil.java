@@ -9,6 +9,7 @@ public class ConnUtil {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 		}catch(ClassNotFoundException e) {
+			System.out.println("DB연동실패");
 			e.printStackTrace();
 		}
 	}
