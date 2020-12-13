@@ -184,27 +184,26 @@ public class MainController implements Initializable {
 	@FXML
 	public void handleSignin(ActionEvent event) {
 		try {
+			sql.setLength(0);
 			sql.append("select id, password from admin");
 			con = application.ConnUtil.getConnection();
 			Statement stmt = con.createStatement();
 			rs = stmt.executeQuery(sql.toString());
 
-//			PreparedStatement pstmt = con.prepareStatement(sql);
-//			pstmt.setString(1, "ID");
-//			pstmt.setString(2, "PASSWORD");
+//			pstmt = con.prepareStatement(sql.toString());
+//			pstmt.setString(1, "id");
+//			pstmt.setString(2, "password");
 //			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				String id = rs.getString(1);
 				String password = rs.getString(2);
-				System.out.println(rs.getString(1));
-				System.out.println(rs.getString(2));
 				System.out.println(id);
 				System.out.println(password);
 
 				if (tfId.getText().equals(id) && tfPwd.getText().equals(password))
 					try {
-						loadAdminMain();
+						loadAdmin();
 					} catch (IOException e) {
 						System.out.println("Áö¶Ç¿¡?");
 						e.printStackTrace();
@@ -217,6 +216,7 @@ public class MainController implements Initializable {
 			e.printStackTrace();
 		}
 		try {if(con!= null) con.close();} catch(SQLException e) {} 
+		try {if(pstmt!= null) pstmt.close();} catch(SQLException e) {} 
 		try {if(rs!= null) rs.close();}catch(SQLException e) {}
 	}
 
@@ -229,7 +229,7 @@ public class MainController implements Initializable {
 		btBacktoSignin.setOnAction(event -> handleBacktoSignin(event));
 	}
 
-	public void loadAdminMain() throws IOException {
+	public void loadAdmin() throws IOException {
 		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/AdminMain.fxml"));
 		pnRoot.getChildren().setAll(pane);
 	}

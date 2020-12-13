@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pnRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<AnchorPane fx:id="pnRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
-      <AnchorPane fx:id="pnRegister" layoutX="50.0" layoutY="50.0" prefHeight="700.0" prefWidth="500.0" style="-fx-background-color: #fafaf4; -fx-border-style: SOLID;" visible="false">
+      <AnchorPane fx:id="pnRegister" layoutX="350.0" layoutY="25.0" prefHeight="650.0" prefWidth="500.0" style="-fx-background-color: #fafaf4; -fx-border-style: SOLID;" visible="false">
          <children>
             <VBox alignment="CENTER" layoutX="100.0" layoutY="61.0" prefHeight="500.0" prefWidth="250.0" spacing="30.0" stylesheets="@Style.css">
                <children>
@@ -41,7 +41,7 @@
             <JFXButton fx:id="btIdCheck" layoutX="376.0" layoutY="120.0" onAction="#handleIdCheck" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: #dfd0de;" text="중복확인" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnSignin" layoutX="50.0" layoutY="100.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #fafaf4; -fx-border-style: SOLID;">
+      <AnchorPane fx:id="pnSignin" layoutX="350.0" layoutY="50.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #fafaf4; -fx-border-style: SOLID;">
          <children>
             <VBox layoutX="150.0" layoutY="230.0" prefHeight="111.0" prefWidth="200.0" spacing="50.0">
                <children>
@@ -71,5 +71,10 @@
             </Label>
          </children>
       </AnchorPane>
+      <JFXButton fx:id="btLoadDeliver" alignment="CENTER" contentDisplay="CENTER" layoutX="936.0" layoutY="600.0" onAction="#loadDeliver" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #fafaf4;" text="The Deliver Mode" textFill="#cfb9ce">
+         <font>
+            <Font name="Tahoma Bold" size="18.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

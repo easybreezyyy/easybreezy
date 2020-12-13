@@ -8,10 +8,15 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
-public class AdminMainController implements Initializable {
+public class AdminController implements Initializable {
 
+    @FXML
+    private StackPane pnAdminRoot;
+	
 	@FXML
 	private JFXButton btItems;
 
@@ -39,10 +44,12 @@ public class AdminMainController implements Initializable {
 	@FXML
 	private JFXButton btRepresentNewCustomer;
 
+    @FXML
+    private TableView<?> tbCustomers;
+	
 	@FXML
 	void handleCustomer(ActionEvent event) {
-		pnAdminHome.setVisible(false);
-		pnCustomer.setVisible(true);
+		pnCustomer.toFront();
 	}
 
 	@FXML
@@ -52,12 +59,13 @@ public class AdminMainController implements Initializable {
 
 	@FXML
 	void handleHome(ActionEvent event) {
-		pnAdminHome.setVisible(true);
+		pnCustomer.toBack();
+		pnAdminHome.toFront();
 	}
 
 	@FXML
 	void handleItems(ActionEvent event) {
-
+		
 	}
 
 	@FXML
@@ -74,6 +82,10 @@ public class AdminMainController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		btCustomer.setOnAction(event -> handleCustomer(event));
 		btHome.setOnAction(event -> handleHome(event));
+		btRepresentNewCustomer.setOnAction(event-> handleCustomer(event));
+		btItems.setOnAction(event -> handleItems(event));
 	}
 
+	
+	
 }
