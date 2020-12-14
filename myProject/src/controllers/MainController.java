@@ -28,6 +28,7 @@ public class MainController implements Initializable {
 	StringBuffer sql = new StringBuffer();
 	ResultSet rs = null;
 	Connection con = null;
+	Statement stmt = null;
 	PreparedStatement pstmt = null; 
 	Boolean duplicatedId = false;
 	
@@ -86,6 +87,10 @@ public class MainController implements Initializable {
 	@FXML
 	private Label lbCheckSignin;
 
+    @FXML
+    private JFXButton btLoadDeliver;
+	
+	 
 	@FXML
 	public void handleBacktoSignin(ActionEvent event) {
 		pnRegister.setVisible(false);
@@ -187,7 +192,7 @@ public class MainController implements Initializable {
 			sql.setLength(0);
 			sql.append("select id, password from admin");
 			con = application.ConnUtil.getConnection();
-			Statement stmt = con.createStatement();
+			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql.toString());
 
 //			pstmt = con.prepareStatement(sql.toString());
@@ -216,7 +221,7 @@ public class MainController implements Initializable {
 			e.printStackTrace();
 		}
 		try {if(con!= null) con.close();} catch(SQLException e) {} 
-		try {if(pstmt!= null) pstmt.close();} catch(SQLException e) {} 
+		//try {if(stmt!= null) stmt.close();} catch(SQLException e) {} 
 		try {if(rs!= null) rs.close();}catch(SQLException e) {}
 	}
 
@@ -227,11 +232,23 @@ public class MainController implements Initializable {
 		btSignin.setOnAction(event -> handleSignin(event));
 		btRegister.setOnAction(event -> handleRegister(event));
 		btBacktoSignin.setOnAction(event -> handleBacktoSignin(event));
+		btLoadDeliver.setOnAction(event->loadDeliver(event));
 	}
 
 	public void loadAdmin() throws IOException {
-		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/AdminMain.fxml"));
+		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Admin.fxml"));
 		pnRoot.getChildren().setAll(pane);
+	}
+	
+	@FXML
+	public void loadDeliver(ActionEvent event) {
+		try {
+			AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Deliver.fxml"));
+			pnRoot.getChildren().setAll(pane);
+		} catch (IOException e) {
+			System.out.println("Deliver Panel 로딩 실패");
+			e.printStackTrace();
+		}
 	}
 
 }

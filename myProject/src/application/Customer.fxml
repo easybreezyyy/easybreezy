@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerController">
+   <children>
+      <VBox alignment="CENTER" layoutX="635.0" layoutY="256.0" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane alignment="CENTER" prefHeight="50.0" prefWidth="1200.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@../image/icons8_clothes_50px_2.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="65.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" GridPane.columnIndex="4">
+                     <image>
+                        <Image url="@../image/icons8_logout_rounded_up_50px_1.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="60.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <JFXButton fx:id="btItems" contentDisplay="TOP" graphicTextGap="10.0" onAction="#handleItems" prefHeight="74.0" prefWidth="248.0" text="     ITEMS" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btCloset" contentDisplay="TOP" graphicTextGap="10.0" onAction="#handleCloset" prefHeight="74.0" prefWidth="248.0" text="     CLOSET" GridPane.columnIndex="2" />
+                  <JFXButton fx:id="btMyAccount" onAction="#handleMyAccount" prefHeight="45.0" prefWidth="246.0" text="  MY ACCOUNT" GridPane.columnIndex="3">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="USER" size="35" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btLogout" onAction="#handleLogout" prefHeight="40.0" prefWidth="246.0" text="   LOGOUT" GridPane.columnIndex="4">
+                     <font>
+                        <Font name="Tahoma" size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btHome" onAction="#handleHome" prefHeight="45.0" prefWidth="252.0" text="  HOME">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="HOME" size="35" />
+                     </graphic>
+                     <font>
+                        <Font name="Tahoma" size="15.0" />
+                     </font>
+                  </JFXButton>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" GridPane.columnIndex="2">
+                     <image>
+                        <Image url="@../../../../../Users/leeji/AppData/Local/Temp/icons8_closet_30px_1.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="65.0" />
+                     </GridPane.margin>
+                  </ImageView>
+               </children>
+            </GridPane>
+            <StackPane>
+               <children>
+                  <AnchorPane fx:id="pnItems" layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="1200.0" visible="false">
+                     <children>
+                        <Label layoutX="937.0" layoutY="14.0" text="WELCOME ">
+                           <font>
+                              <Font name="Tahoma" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="1071.0" layoutY="14.0" text="Username">
+                           <font>
+                              <Font name="Tahoma" size="24.0" />
+                           </font>
+                        </Label>
+                        <GridPane hgap="50.0" layoutX="150.0" layoutY="113.0" prefHeight="480.0" prefWidth="900.0" vgap="10.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <ImageView fx:id="imageItem00" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="lbBrand00" text="Brand" />
+                                    <Label fx:id="lbItemname00" text="Itemname" />
+                                 </children>
+                              </VBox>
+                              <VBox GridPane.columnIndex="1">
+                                 <children>
+                                    <ImageView fx:id="imageItem10" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="lbBrand10" text="Brand" />
+                                    <Label fx:id="lbItemname10" text="Itemname" />
+                                 </children>
+                              </VBox>
+                              <VBox GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="imageitem01" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="lbBrand01" text="Brand" />
+                                    <Label fx:id="lbItemname01" text="Itemname" />
+                                 </children>
+                              </VBox>
+                              <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="imageItem11" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="lbBrand11" text="Brand" />
+                                    <Label fx:id="lbItemname11" text="Itemname" />
+                                 </children>
+                              </VBox>
+                              <VBox GridPane.columnIndex="2">
+                                 <children>
+                                    <ImageView fx:id="imageItem20" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="lbBrand20" text="Brand" />
+                                    <Label fx:id="lbItemname20" text="Itemname" />
+                                 </children>
+                              </VBox>
+                              <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="imageItem21" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="lbBrand21" text="Brand" />
+                                    <Label fx:id="lbItemname21" text="Itemname" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </GridPane>
+                        <JFXTextField fx:id="tfSearch" focusColor="#b38eb1" layoutX="289.0" layoutY="39.0" prefHeight="58.0" prefWidth="415.0" promptText="Kijun" text="검색어 입력">
+                           <font>
+                              <Font name="Tahoma" size="30.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXButton fx:id="btsearch" graphicTextGap="10.0" layoutX="711.0" layoutY="39.0" onAction="#handleSearch" prefHeight="58.0" prefWidth="150.0" style="-fx-background-color: #cfb9ce;" text="Search">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="SEARCH" size="24" />
+                           </graphic>
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pnCloset" prefHeight="200.0" prefWidth="200.0" visible="false">
+                     <children>
+                        <TableView layoutX="116.0" layoutY="62.0" prefHeight="450.0" prefWidth="968.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="주문번호" />
+                            <TableColumn prefWidth="160.0" text="품명" />
+                              <TableColumn prefWidth="171.0" text="브랜드" />
+                              <TableColumn prefWidth="198.0" text="대여일" />
+                              <TableColumn prefWidth="154.0" text="대여상태" />
+                          </columns>
+                        </TableView>
+                        <HBox layoutX="398.0" layoutY="533.0">
+                           <children>
+                              <Label text="이번달 잔여 대여 횟수 : ">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbCountRemain" text="몇">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label text=" 회">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pnMyAccount" prefHeight="200.0" prefWidth="200.0" visible="false">
+                     <children>
+                        <GridPane layoutX="143.0" layoutY="67.0" prefHeight="369.0" prefWidth="900.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="133.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="311.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="310.0" minWidth="10.0" prefWidth="166.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="283.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <JFXTextField fx:id="tfAccountPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <JFXTextField fx:id="tfAccountPhone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <JFXTextField fx:id="tfAccountConfirmpwd" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <JFXTextField fx:id="tfAccountAddr" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <Label text="ID :" />
+                              <Label text="Name :" GridPane.columnIndex="2">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Password :" GridPane.rowIndex="1" />
+                              <Label text="Confirm Password :" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Label text="Phone : " GridPane.rowIndex="2" />
+                              <Label text="Address : " GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Label text="Card Number : " GridPane.rowIndex="3" />
+                              <JFXTextField fx:id="tfAccountCard" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label fx:id="lbAccountId" text="User ID" GridPane.columnIndex="1" />
+                              <Label fx:id="lbAccountName" text="Username" GridPane.columnIndex="3" />
+                           </children>
+                        </GridPane>
+                        <JFXButton fx:id="btUpdate" alignment="CENTER" contentDisplay="CENTER" layoutX="771.0" layoutY="488.0" onAction="#handleUpdate" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Update">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btUnsubscribe" alignment="CENTER" contentDisplay="CENTER" layoutX="907.0" layoutY="488.0" onAction="#handleUnsubscribe" prefHeight="60.0" prefWidth="136.0" style="-fx-background-color: #b38eb1;" text="Unsubscribe">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <Label fx:id="lbCompleteUpdate" alignment="CENTER" contentDisplay="CENTER" layoutX="498.0" layoutY="529.0" text="정상적으로 수정되었습니다." visible="false" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pnHome" prefHeight="600.0" prefWidth="1200.0">
+                     <children>
+                        <Label layoutX="937.0" layoutY="14.0" text="WELCOME ">
+                           <font>
+                              <Font name="Tahoma" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="1071.0" layoutY="14.0" text="Username">
+                           <font>
+                              <Font name="Tahoma" size="24.0" />
+                           </font>
+                        </Label>
+                        <GridPane hgap="50.0" layoutX="150.0" layoutY="117.0" prefHeight="450.0" prefWidth="900.0" vgap="10.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ImageView fitHeight="220.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitHeight="220.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+                              <ImageView fitHeight="220.0" fitWidth="267.0" layoutX="644.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                              <ImageView fitHeight="220.0" fitWidth="267.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ImageView fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Label layoutX="107.0" layoutY="52.0" text="Newly Added">
+                           <font>
+                              <Font name="Tahoma" size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" text="OUR CLOSET" textFill="#b38eb1">
+               <font>
+                  <Font name="Tahoma" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
