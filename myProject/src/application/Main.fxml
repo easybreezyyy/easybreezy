@@ -19,7 +19,7 @@
       </ImageView>
       <AnchorPane fx:id="pnRegister" layoutX="350.0" layoutY="25.0" prefHeight="650.0" prefWidth="500.0" style="-fx-background-color: #fafaf4;" visible="false">
          <children>
-            <VBox alignment="CENTER" layoutX="100.0" layoutY="61.0" prefHeight="500.0" prefWidth="250.0" spacing="30.0" stylesheets="@Style.css">
+            <VBox alignment="CENTER" layoutX="100.0" layoutY="61.0" prefHeight="500.0" prefWidth="250.0" spacing="30.0">
                <children>
                   <JFXTextField fx:id="tfIdRegister" focusColor="#b38eb1" promptText="ID" />
                   <JFXPasswordField fx:id="tfPwdRegister" focusColor="#b38eb1" promptText="Password" />
@@ -45,10 +45,48 @@
                   <Font name="Tahoma" size="36.0" />
                </font>
             </Label>
-            <JFXButton fx:id="btIdCheck" layoutX="376.0" layoutY="120.0" onAction="#handleIdCheck" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: #dfd0de;" text="중복확인" />
+            <JFXButton fx:id="btIdCheck" layoutX="363.0" layoutY="111.0" onAction="#handleIdCheck" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: #dfd0de;" text="중복확인">
+               <font>
+                  <Font name="Malgun Gothic" size="15.0" />
+               </font></JFXButton>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pnSignin" layoutX="350.0" layoutY="50.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #fafaf4;">
+      <AnchorPane fx:id="pnDeliverMode" layoutX="350.0" layoutY="50.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #fafaf4;" visible="false">
+         <children>
+            <VBox layoutX="150.0" layoutY="230.0" prefHeight="111.0" prefWidth="200.0" spacing="50.0">
+               <children>
+                  <JFXTextField fx:id="tfdId" focusColor="#b38eb1" promptText="ID" />
+                  <JFXPasswordField fx:id="tfdPwd" focusColor="#b38eb1" promptText="Password" />
+               </children>
+            </VBox>
+            <JFXButton fx:id="btDeliverSignin" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="443.0" onAction="#handleDeliverSignin" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Sign in">
+               <font>
+                  <Font name="Tahoma Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="146.0" layoutY="64.0" text="OUR CLOSET" textFill="#b38eb1">
+               <font>
+                  <Font name="Tahoma" size="36.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="68.0" layoutY="120.0" text="THE DELIVERS MODE" textFill="#8a7b89">
+               <font>
+                  <Font name="Tahoma Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbCheckSignin" layoutX="141.0" layoutY="391.0" text="아이디와 비밀번호를 확인해주세요." textFill="RED" visible="false">
+               <font>
+                  <Font name="Malgun Gothic" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <JFXButton fx:id="btDeliverMode" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="10.0" layoutX="936.0" layoutY="600.0" onAction="#handleDeliverMode" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #fafaf4;" text="The Deliver Mode" textFill="#69625f">
+         <font>
+            <Font name="Tahoma Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <AnchorPane fx:id="pnSignin" layoutX="350.0" layoutY="51.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #fafaf4;">
          <children>
             <VBox layoutX="150.0" layoutY="230.0" prefHeight="111.0" prefWidth="200.0" spacing="50.0">
                <children>
@@ -71,14 +109,14 @@
                   <Font name="Tahoma" size="36.0" />
                </font>
             </Label>
-            <Label fx:id="lbCheckSignin" alignment="CENTER" layoutX="130.0" layoutY="396.0" style="-fx-font-family: NanumSquareR;" styleClass="Style.css" text="아이디와 비밀번호를 확인해주세요." textFill="#d05454" visible="false">
+            <Label fx:id="lbCheckSignin1" alignment="CENTER" layoutX="130.0" layoutY="396.0" text="아이디와 비밀번호를 확인해주세요." textFill="#d05454" visible="false">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Malgun Gothic Semilight" size="15.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <JFXButton fx:id="btLoadDeliver" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="936.0" layoutY="600.0" onAction="#loadDeliver" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #fafaf4;" text="The Deliver Mode" textFill="#69625f">
+      <JFXButton fx:id="btCancel" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="936.0" layoutY="600.0" onAction="#handleCancel" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #fafaf4;" text="Cancel" textFill="#69625f" visible="false">
          <font>
             <Font name="Tahoma Bold" size="18.0" />
          </font>

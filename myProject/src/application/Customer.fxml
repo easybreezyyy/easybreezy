@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerController">
    <children>
@@ -93,7 +94,7 @@
                               <Font name="Tahoma" size="24.0" />
                            </font>
                         </Label>
-                        <Label layoutX="1071.0" layoutY="14.0" text="Username">
+                        <Label fx:id="lbUsername" layoutX="1071.0" layoutY="14.0" text="Username">
                            <font>
                               <Font name="Tahoma" size="24.0" />
                            </font>
@@ -153,7 +154,7 @@
                               </VBox>
                            </children>
                         </GridPane>
-                        <JFXTextField fx:id="tfSearch" focusColor="#b38eb1" layoutX="289.0" layoutY="39.0" prefHeight="58.0" prefWidth="415.0" promptText="Kijun" text="검색어 입력">
+                        <JFXTextField fx:id="tfSearch" focusColor="#b38eb1" layoutX="289.0" layoutY="39.0" prefHeight="58.0" prefWidth="415.0" promptText="BURBERRY">
                            <font>
                               <Font name="Tahoma" size="30.0" />
                            </font>
@@ -254,16 +255,6 @@
                   </AnchorPane>
                   <AnchorPane fx:id="pnHome" prefHeight="600.0" prefWidth="1200.0">
                      <children>
-                        <Label layoutX="937.0" layoutY="14.0" text="WELCOME ">
-                           <font>
-                              <Font name="Tahoma" size="24.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="1071.0" layoutY="14.0" text="Username">
-                           <font>
-                              <Font name="Tahoma" size="24.0" />
-                           </font>
-                        </Label>
                         <GridPane hgap="50.0" layoutX="150.0" layoutY="117.0" prefHeight="450.0" prefWidth="900.0" vgap="10.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -288,6 +279,11 @@
                               <Font name="Tahoma" size="36.0" />
                            </font>
                         </Label>
+                        <Text fx:id="welcome" layoutX="938.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                           <font>
+                              <Font name="Tahoma" size="24.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
                </children>

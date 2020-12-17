@@ -21,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
 
 public class AdminController implements Initializable {
 
+	@FXML private AnchorPane pnRoot;
+	
 	@FXML
 	private JFXButton btItems;
 
@@ -87,38 +89,42 @@ public class AdminController implements Initializable {
 	@FXML
 	private JFXButton btRepresentNewCustomer;
 
-	@FXML
-	void handleCustomer(ActionEvent event) {
-		pnAdminHome.toBack();
-		pnItems.toBack();
-		pnRecent.toBack();
-		pnCustomer.toFront();
+	public void handleCustomer(ActionEvent event) {
+		pnAdminHome.setVisible(false);
+		pnItems.setVisible(false);
+		pnRecent.setVisible(false);
+		pnCustomer.setVisible(true);
 	}
 
-	@FXML
-	void handleDeleteMember(ActionEvent event) {
-
+	public void handleHome(ActionEvent event) {
+		pnItems.setVisible(false);
+		pnRecent.setVisible(false);
+		pnCustomer.setVisible(false);
+		pnAdminHome.setVisible(true);
 	}
 
-	@FXML
-	void handleHome(ActionEvent event) {
-
+	public void handleItems(ActionEvent event) {
+		pnAdminHome.setVisible(false);
+		pnRecent.setVisible(false);
+		pnCustomer.setVisible(false);
+		pnItems.setVisible(true);
 	}
 
-	@FXML
-	void handleItems(ActionEvent event) {
-
+	public void handleRecent(ActionEvent event) {
+		pnAdminHome.setVisible(false);
+		pnItems.setVisible(false);
+		pnCustomer.setVisible(false);
+		pnRecent.setVisible(true);
 	}
-
-	@FXML
-	void handleLogout(ActionEvent event) {
+	
+	public void handleLogout(ActionEvent event) {
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/application/LogoutDialog.fxml"));
 			DialogPane LogoutDialogPane = fxmlLoader.load();
 			
 			AdminController adminController = fxmlLoader.getController();
-			//adminController.setMember(member);
+			//adminController.logoutMember(member);
 			
 			Dialog<ButtonType> dialog = new Dialog<>();
 			dialog.setDialogPane(LogoutDialogPane);
@@ -127,6 +133,7 @@ public class AdminController implements Initializable {
 			Optional<ButtonType> result = dialog.showAndWait();
 			if(result.get()==ButtonType.YES) {
 				System.out.println("로그아웃 하시겠답니다.");
+				loadMain();
 			}else if (result.get()==ButtonType.CANCEL) {
 				System.out.println("로그아웃 취소");
 			}
@@ -135,11 +142,13 @@ public class AdminController implements Initializable {
 		}
 	}
 
+
+
+
 	@FXML
-	void handleRecent(ActionEvent event) {
-
+	void handleDeleteMember(ActionEvent event) {
+		
 	}
-
 	@FXML
 	void handleSms(ActionEvent event) {
 
@@ -153,4 +162,8 @@ public class AdminController implements Initializable {
 		btItems.setOnAction(event -> handleItems(event));
 	}
 
+	public void loadMain() throws IOException {
+		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		pnRoot.getChildren().setAll(pane);
+	}
 }

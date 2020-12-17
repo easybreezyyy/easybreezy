@@ -56,6 +56,13 @@ public class MemberVO {
 	public void setCard(String card) {
 		this.card = card;
 	}
+
+	@Override
+	public String toString() {
+		return "MemberVO [id=" + id + ", password=" + password + ", name=" + name + ", phone=" + phone + ", addr="
+				+ addr + ", card=" + card + "]";
+	}
+	
 	
 	
 }

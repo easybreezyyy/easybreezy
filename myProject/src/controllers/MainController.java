@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -15,6 +14,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import application.MemberDAO;
 import application.MemberVO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,12 +28,28 @@ public class MainController implements Initializable {
 	StringBuffer sql = new StringBuffer();
 	ResultSet rs = null;
 	Connection con = null;
-	Statement stmt = null;
 	PreparedStatement pstmt = null; 
 	Boolean duplicatedId = false;
 	
-	private MemberVO member = new MemberVO();
-	private Map<String, MemberVO> map = new HashMap<>();
+//	private static MemberDAO memberdao;
+//	private MemberVO member;
+
+	
+	private static MainController instance;
+	
+	public MainController() { 
+		instance = this; 
+	}
+	
+	public static MainController getInstance() {
+		return instance;
+	}
+	
+	public String id() {
+		return this.tfId.getText();
+	}
+	
+	public static Map<String, MemberVO> map = new HashMap<>();
 
 	@FXML
 	private AnchorPane pnRoot;
@@ -86,14 +102,72 @@ public class MainController implements Initializable {
 
 	@FXML
 	private Label lbCheckSignin;
+	@FXML private Label lbCheckSignin1;
 
     @FXML
-    private JFXButton btLoadDeliver;
+    private JFXButton btDeliverMode;
 	
+    @FXML
+    private AnchorPane pnDeliverMode;
+
+    @FXML
+    private JFXTextField tfdId;
+
+    @FXML
+    private JFXPasswordField tfdPwd;
+
+    @FXML
+    private JFXButton btDeliverSignin;
+
+    @FXML
+    private JFXButton btCancel;
+
+    
+    public void handleCancel(ActionEvent event) {
+    	pnDeliverMode.setVisible(false);
+    	pnRegister.setVisible(false);
+    	pnSignin.setVisible(true);
+    	btCancel.setVisible(false);
+    	btDeliverMode.setVisible(true);
+    	tfId.requestFocus();
+    	return;
+    }
+    
+    public void handleDeliverSignin(ActionEvent event){
+    	try {
+			sql.setLength(0);
+			sql.append("select password from delivers where id = ?");
+			con = application.ConnUtil.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, tfdId.getText().trim());
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {	//아이디 있음 
+				String password = rs.getString(1);
+				System.out.println(password);
+	
+				if(tfdPwd.getText().trim().equals(password))	{//비밀번호 맞으면
+					try {
+						loadDeliver();
+					} catch (IOException e) {
+						System.out.println("Deliver Panel 로딩 실패");
+						e.printStackTrace();
+					}
+				}		
+			}//end while 아이디 없음
+			lbCheckSignin.setVisible(true);
+		} catch (SQLException e) {
+			System.out.println("쿼리문 틀렸다");
+			e.printStackTrace();
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+    	return;
+    }
+    
 	 
 	@FXML
 	public void handleBacktoSignin(ActionEvent event) {
 		pnRegister.setVisible(false);
+		pnDeliverMode.setVisible(false);
 		pnSignin.setVisible(true);
 		tfId.requestFocus();
 		tfAddr.setText("");
@@ -103,6 +177,7 @@ public class MainController implements Initializable {
 		tfName.setText("");
 		tfPhone.setText("");
 		tfPwdRegister.setText("");
+		return;
 	}
 
 	@FXML
@@ -110,13 +185,14 @@ public class MainController implements Initializable {
 		pnSignin.setVisible(false);
 		pnRegister.setVisible(true);
 		tfIdRegister.requestFocus();
+		return;
 	}
 
 	@FXML
 	public void handleIdCheck(ActionEvent event) {
 		try {
 			sql.setLength(0);
-			sql.append("select id from customer where id = ?");	//이 아이디를 db에서 검색
+			sql.append("select id from members where id = ?");	//이 아이디를 db에서 검색
 			con = application.ConnUtil.getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, tfIdRegister.getText().trim());
@@ -125,21 +201,14 @@ public class MainController implements Initializable {
 			if(rs.next()) {
 					System.out.println("사용중인 아이디입니다.");
 					duplicatedId = true;
-			}else {
-				if(tfIdRegister.getText().trim().equals("admin")) {
-					System.out.println("사용할 수 없는 아이디입니다.");
-					duplicatedId = true;					
-				} else
-					System.out.println("사용할 수 있는 아이디입니다.");
-			}
+			}else
+				System.out.println("사용할 수 있는 아이디입니다.");
 
 		}catch (SQLException e) {
 			System.out.println("check Query");
 			e.printStackTrace();
-		}
-		try {if(con!= null) con.close();} catch(SQLException e) {} 
-		try {if(pstmt!= null) pstmt.close();} catch(SQLException e) {} 
-		try {if(rs!= null) rs.close();}catch(SQLException e) {}
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+		return;
 	}
 
 	@FXML
@@ -162,7 +231,7 @@ public class MainController implements Initializable {
 			map.put(member.getId(), member);
 			try {
 				sql.setLength(0);
-				sql.append("insert into customer values(?,?,?,?,?,?)");
+				sql.append("insert into members values(?,?,?,?,?,?)");
 				con = application.ConnUtil.getConnection();
 				pstmt = con.prepareStatement(sql.toString());
 				pstmt.setString(1, member.getId());
@@ -173,6 +242,9 @@ public class MainController implements Initializable {
 				pstmt.setString(6, member.getCard());
 				int i = pstmt.executeUpdate();
 				System.out.println(i + "행이 추가되었습니다.");
+				
+				tfAddr.setEditable(false);
+				
 			}catch(SQLException e) {
 				System.out.println("db(customer 테이블)에 안들어감");
 				e.printStackTrace();
@@ -184,47 +256,62 @@ public class MainController implements Initializable {
 		
 		try {if(pstmt!= null) pstmt.close();} catch(SQLException e) {} 
 		try {if(con!= null) con.close();} catch(SQLException e) {} 
+		return;
 	}
 
 	@FXML
 	public void handleSignin(ActionEvent event) {
 		try {
 			sql.setLength(0);
-			sql.append("select id, password from admin");
+			sql.append("select password from members where id = ?");
 			con = application.ConnUtil.getConnection();
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(sql.toString());
-
-//			pstmt = con.prepareStatement(sql.toString());
-//			pstmt.setString(1, "id");
-//			pstmt.setString(2, "password");
-//			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				String id = rs.getString(1);
-				String password = rs.getString(2);
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, tfId.getText().trim());
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {	//아이디 있음 
+				String id = tfId.getText().trim();
 				System.out.println(id);
+				String password = rs.getString(1);
 				System.out.println(password);
-
-				if (tfId.getText().equals(id) && tfPwd.getText().equals(password))
-					try {
-						loadAdmin();
-					} catch (IOException e) {
-						System.out.println("지또에?");
-						e.printStackTrace();
+	
+				if(tfPwd.getText().trim().equals(password))	{//비밀번호 맞으면
+					if (tfId.getText().trim().equals("admin")) {
+						try {
+							loadAdmin();
+						} catch (IOException e) {
+							System.out.println("지또에?");
+							e.printStackTrace();
+						}
+					}else {		//customer
+						try {
+							loadCustomer();
+						} catch (IOException e) {
+							System.out.println("지또에?");
+							e.printStackTrace();
+						}
 					}
-				else
-					lbCheckSignin.setVisible(true);
-			}
+					
+				}		
+			}//end while 아이디 없음
+			lbCheckSignin1.setVisible(true);
 		} catch (SQLException e) {
 			System.out.println("쿼리문 틀렸다");
 			e.printStackTrace();
-		}
-		try {if(con!= null) con.close();} catch(SQLException e) {} 
-		//try {if(stmt!= null) stmt.close();} catch(SQLException e) {} 
-		try {if(rs!= null) rs.close();}catch(SQLException e) {}
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+		return;
 	}
 
+	public void handleDeliverMode(ActionEvent event) {
+		pnSignin.setVisible(false);
+		pnRegister.setVisible(false);
+		pnDeliverMode.setVisible(true);
+		btCancel.setVisible(true);
+		btDeliverMode.setVisible(false);
+		tfdId.requestFocus();
+		return;
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tfId.requestFocus();
@@ -232,23 +319,25 @@ public class MainController implements Initializable {
 		btSignin.setOnAction(event -> handleSignin(event));
 		btRegister.setOnAction(event -> handleRegister(event));
 		btBacktoSignin.setOnAction(event -> handleBacktoSignin(event));
-		btLoadDeliver.setOnAction(event->loadDeliver(event));
+		btDeliverMode.setOnAction(event->handleDeliverMode(event));
+		btCancel.setOnAction(event->handleCancel(event));
+		btDeliverSignin.setOnAction(event->handleDeliverSignin(event));
 	}
+
 
 	public void loadAdmin() throws IOException {
 		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Admin.fxml"));
 		pnRoot.getChildren().setAll(pane);
 	}
 	
-	@FXML
-	public void loadDeliver(ActionEvent event) {
-		try {
-			AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Deliver.fxml"));
-			pnRoot.getChildren().setAll(pane);
-		} catch (IOException e) {
-			System.out.println("Deliver Panel 로딩 실패");
-			e.printStackTrace();
-		}
+	public void loadCustomer() throws IOException {
+		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Customer.fxml"));
+		pnRoot.getChildren().setAll(pane);
+	}
+
+	public void loadDeliver() throws IOException {
+		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Deliver.fxml"));
+		pnRoot.getChildren().setAll(pane);
 	}
 
 }

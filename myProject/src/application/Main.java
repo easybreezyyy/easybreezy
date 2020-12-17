@@ -13,13 +13,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-			System.setProperty("prism.lcdtext", "false");
-			Font.loadFont(getClass().getResourceAsStream("/resources/NanumSquareR.ttf"), 15);
-
 			Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("Our Closet");
-			primaryStage.getIcons().add(new Image("image/icons8_closet_30px.png"));
+			primaryStage.getIcons().add(new Image("image/icons8_closet_30px_3.png"));
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (Exception e) {

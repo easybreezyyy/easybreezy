@@ -1,4 +1,4 @@
-.label {
-	-fx-font-size: 15pt;
-	-fx-font-family: "NanumSquareR";
+* {
+	-fx-font-family: "Malgun Gothic";
+	-fx-font-size: 12pt;
 }
