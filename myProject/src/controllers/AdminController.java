@@ -2,32 +2,62 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
+import application.CustomerTableVO;
 import application.MemberDAO;
 import application.MemberVO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class AdminController implements Initializable {
-	
+
 	MemberDAO memberdao = new MemberDAO();
 	MemberVO member;
-
-	@FXML private AnchorPane pnRoot;
 	
+	public static ObservableList<CustomerTableVO> customerList = FXCollections.observableArrayList();
+
+	@FXML StackPane pnStack;
+	
+	@FXML
+	private AnchorPane pnRoot;
+
+	@FXML
+	private TableView<CustomerTableVO> tbCustomers;
+
+	@FXML
+	private TableColumn<CustomerTableVO, String> colId;
+
+	@FXML
+	private TableColumn<CustomerTableVO, String> colName;
+
+	@FXML
+	private TableColumn<CustomerTableVO, String> colPhone;
+
+	@FXML
+	private TableColumn<CustomerTableVO, String> colCard;
+
+	@FXML
+	private TableColumn<CustomerTableVO, String> colStatus;
+
 	@FXML
 	private JFXButton btItems;
 
@@ -46,8 +76,6 @@ public class AdminController implements Initializable {
 	@FXML
 	private AnchorPane pnCustomer;
 
-	@FXML
-	private TableView<?> tbCustomers;
 
 	@FXML
 	private JFXButton btDeleteMember;
@@ -121,16 +149,33 @@ public class AdminController implements Initializable {
 		pnCustomer.setVisible(false);
 		pnRecent.setVisible(true);
 	}
-	
+
 	public void handleLogout(ActionEvent event) throws IOException {
+		tbCustomers.getItems().clear();
 		loadMain();
 	}
 
-
 	@FXML
 	void handleDeleteMember(ActionEvent event) {
-		
+		String alert = "성공적으로 삭제되었습니다.";
+		CustomerTableVO ct = tbCustomers.getSelectionModel().getSelectedItem();
+		if(ct != null) {
+			tbCustomers.getItems().remove(ct);
+			memberdao.deleteMember(ct.getId());
+			
+			JFXDialogLayout dialogLayout = new JFXDialogLayout();
+			JFXButton button = new JFXButton("OK");
+			JFXDialog dialog = new JFXDialog(pnStack, dialogLayout, JFXDialog.DialogTransition.TOP);
+			button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{dialog.close();});
+			
+			Text text = new Text(alert);
+			text.setFont(Font.font("Malgun Gothic"));
+			dialogLayout.setBody(text);
+			dialogLayout.setActions(button);
+			dialog.show();
+		}
 	}
+
 	@FXML
 	void handleSms(ActionEvent event) {
 
@@ -138,6 +183,14 @@ public class AdminController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		memberdao.getCustomerTable();
+		colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		colCard.setCellValueFactory(new PropertyValueFactory<>("card"));
+		colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+		colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+		tbCustomers.setItems(customerList);
+		
 		btRepresentNewCustomer.setText(String.valueOf(memberdao.todayMember()));
 		btCustomer.setOnAction(event -> handleCustomer(event));
 		btHome.setOnAction(event -> handleHome(event));

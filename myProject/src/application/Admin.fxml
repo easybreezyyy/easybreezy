@@ -90,18 +90,17 @@
                   </JFXButton>
                </children>
       				</GridPane>
-            <StackPane>
+            <StackPane fx:id="pnStack">
                <children>
                   <AnchorPane fx:id="pnCustomer" prefHeight="600.0" prefWidth="1200.0" visible="false">
                      <children>
                         <TableView fx:id="tbCustomers" layoutX="50.0" layoutY="52.0" prefHeight="500.0" prefWidth="876.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="101.0" text="Name" />
-                              <TableColumn prefWidth="179.0" text="Phone" />
-                              <TableColumn prefWidth="290.0" text="Card" />
-                              <TableColumn prefWidth="115.0" text="Status" />
-                              <TableColumn prefWidth="115.0" text="Remain" />
+                            <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="colName" prefWidth="101.0" text="Name" />
+                              <TableColumn fx:id="colPhone" prefWidth="179.0" text="Phone" />
+                              <TableColumn fx:id="colCard" prefWidth="290.0" text="Card" />
+                              <TableColumn fx:id="colStatus" prefWidth="170.0" text="Status" />
                           </columns>
                         </TableView>
                         <JFXButton fx:id="btDeleteMember" alignment="CENTER" contentDisplay="CENTER" layoutX="987.0" layoutY="492.0" onAction="#handleDeleteMember" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Delete">
@@ -124,7 +123,7 @@
                         </TableView>
                         <Label layoutX="236.0" layoutY="14.0" text="금일 주문 리스트" textFill="#69625f">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="Malgun Gothic" size="18.0" />
                            </font>
                         </Label>
                         <TableView layoutX="627.0" layoutY="40.0" prefHeight="250.0" prefWidth="530.0">
@@ -147,12 +146,12 @@
                         </TableView>
                         <Label layoutX="236.0" layoutY="307.0" text="금일 수거 리스트" textFill="#69625f">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="Malgun Gothic" size="18.0" />
                            </font>
                         </Label>
                         <Label layoutX="821.0" layoutY="14.0" text="미수거 리스트" textFill="#69625f">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="Malgun Gothic" size="18.0" />
                            </font>
                         </Label>
                         <JFXButton fx:id="btSms" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="15.0" layoutX="840.0" layoutY="439.0" onAction="#handleSms" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="SMS">

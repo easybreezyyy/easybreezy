@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import controllers.AdminController;
+
 /**
  * DB를 기반으로 하는 회원 CRUD 구현 클래스
  * @author leejisoo
@@ -196,5 +198,40 @@ public class MemberDAO {
 		return i;
 	}
 	
+	/**
+	 * 회원정보 - 테이블 연동을 위한 메서드
+	 */
+	public void getCustomerTable() {
+		CustomerTableVO ct = null;
+		sql.setLength(0);
+		sql.append("select id,name,phone,card,status from members");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt=con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ct = new CustomerTableVO(); 
+
+				String id = rs.getString("id");
+				String name = rs.getString("name");
+				String phone = rs.getString("phone");
+				String card = rs.getString("card");
+				String status = rs.getString("status");
+				
+				ct.setId(id);
+				ct.setName(name);
+				ct.setPhone(phone);
+				ct.setCard(card);
+				ct.setStatus(status);
+				
+				AdminController.customerList.add(ct);
+			}
+		}catch (SQLException e) {
+			System.out.println("테이블 연동 실패");
+			e.printStackTrace();
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+		
+	}
 	
 }

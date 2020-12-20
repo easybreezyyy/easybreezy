@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class CustomerController implements Initializable {
@@ -272,7 +273,9 @@ public class CustomerController implements Initializable {
 				}
 			});
 		
-		dialogLayout.setBody(new Text(alert));
+		Text text = new Text(alert);
+		text.setFont(Font.font("Malgun Gothic"));
+		dialogLayout.setBody(text);
 		dialogLayout.setActions(button);
 		dialog.show();
 	}
@@ -309,7 +312,9 @@ public class CustomerController implements Initializable {
 		JFXDialog dialog = new JFXDialog(pnStack, dialogLayout, JFXDialog.DialogTransition.TOP);
 		button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{dialog.close();});
 		
-		dialogLayout.setBody(new Text(alert));
+		Text text = new Text(alert);
+		text.setFont(Font.font("Malgun Gothic"));
+		dialogLayout.setBody(text);
 		dialogLayout.setActions(button);
 		dialog.show();
 	}

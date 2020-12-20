@@ -16,8 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="controllers.DeliverController">
+<AnchorPane fx:id="pnRoot" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DeliverController">
    <children>
       <VBox alignment="CENTER" layoutX="361.0" layoutY="203.0" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -78,7 +77,7 @@
                   <Insets left="100.0" right="100.0" />
                </padding>
             </GridPane>
-            <StackPane prefHeight="600.0" prefWidth="1200.0">
+            <StackPane fx:id="pnStack" prefHeight="600.0" prefWidth="1200.0">
                <children>
                   <VBox fx:id="pnCollect" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" visible="false">
                      <children>
