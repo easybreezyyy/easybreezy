@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,79 +9,107 @@ import com.jfoenix.controls.JFXComboBox;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class DeliverController implements Initializable {
+public class DeliverController implements Initializable{
 
-	@FXML
-	private JFXButton btDelivery;
+    @FXML
+    private AnchorPane pnRoot;
 
-	@FXML
-	private JFXButton btCollect;
+    @FXML
+    private JFXButton btDelivery;
 
-	@FXML
-	private JFXButton btLogout;
+    @FXML
+    private JFXButton btCollect;
 
-	@FXML
-	private VBox pnCollect;
+    @FXML
+    private JFXButton btLogout;
 
-	@FXML
-	private JFXComboBox<?> cbState1;
+    @FXML
+    private StackPane pnStack;
 
-	@FXML
-	private TableView<?> tbCollect;
+    @FXML
+    private VBox pnCollect;
 
-	@FXML
-	private JFXButton btCompleteCollect;
+    @FXML
+    private JFXComboBox<?> cbState1;
 
-	@FXML
-	private VBox pnDelivery;
+    @FXML
+    private TableView<?> tbCollect;
 
-	@FXML
-	private JFXComboBox<?> cbState;
+    @FXML
+    private JFXButton btCompleteCollect;
 
-	@FXML
-	private TableView<?> tbDelivery;
+    @FXML
+    private VBox pnDelivery;
 
-	@FXML
-	private JFXButton btCompleteDelivery;
+    @FXML
+    private JFXComboBox<?> cbState;
 
-	@FXML
-	void getState(ActionEvent event) {
+    @FXML
+    private TableView<?> tbDelivery;
 
-	}
+    @FXML
+    private JFXButton btCompleteDelivery;
 
-	@FXML
-	void handleCollect(ActionEvent event) {
+    
+    /**
+     * 콤보박스에서 지역 선택시 해당 지역 리스트 추출
+     */
+    @FXML
+    void getState(ActionEvent event) {
 
-	}
+    }
 
-	@FXML
-	void handleCompleteCollect(ActionEvent event) {
+    @FXML
+    void handleCompleteCollect(ActionEvent event) {
 
-	}
+    }
 
-	@FXML
-	void handleCompleteDelivery(ActionEvent event) {
+    @FXML
+    void handleCompleteDelivery(ActionEvent event) {
 
-	}
+    }
+    
+    @FXML
+    void handleCollect(ActionEvent event) {
+    	pnCollect.setVisible(true);
+    	pnDelivery.setVisible(false);
+    }
 
-	@FXML
-	void handleDelivery(ActionEvent event) {
+    @FXML
+    void handleDelivery(ActionEvent event) {
+    	pnCollect.setVisible(false);
+    	pnDelivery.setVisible(true);
+    }
 
-	}
-
-	@FXML
-	void handleLogout(ActionEvent event) {
-
-	}
+    @FXML
+    void handleLogout(ActionEvent event) {
+    	try {
+			loadMain();
+		} catch (IOException e) {
+			System.out.println("메인 패널 로딩 실패");
+			e.printStackTrace();
+		}
+    }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
+		btLogout.setOnAction(event->handleLogout(event));
+		btCollect.setOnAction(event->handleCollect(event));
+		btDelivery.setOnAction(event->handleDelivery(event));
+		
+		
 	}
 
+	public void loadMain() throws IOException {
+		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		pnRoot.getChildren().setAll(pane);
+	}
+	
 }

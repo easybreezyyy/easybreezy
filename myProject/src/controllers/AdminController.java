@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
+import application.MemberDAO;
+import application.MemberVO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 
 public class AdminController implements Initializable {
+	
+	MemberDAO memberdao = new MemberDAO();
+	MemberVO member;
 
 	@FXML private AnchorPane pnRoot;
 	
@@ -117,32 +122,9 @@ public class AdminController implements Initializable {
 		pnRecent.setVisible(true);
 	}
 	
-	public void handleLogout(ActionEvent event) {
-		try {
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("/application/LogoutDialog.fxml"));
-			DialogPane LogoutDialogPane = fxmlLoader.load();
-			
-			AdminController adminController = fxmlLoader.getController();
-			//adminController.logoutMember(member);
-			
-			Dialog<ButtonType> dialog = new Dialog<>();
-			dialog.setDialogPane(LogoutDialogPane);
-			dialog.setTitle("Logout");
-			
-			Optional<ButtonType> result = dialog.showAndWait();
-			if(result.get()==ButtonType.YES) {
-				System.out.println("로그아웃 하시겠답니다.");
-				loadMain();
-			}else if (result.get()==ButtonType.CANCEL) {
-				System.out.println("로그아웃 취소");
-			}
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
+	public void handleLogout(ActionEvent event) throws IOException {
+		loadMain();
 	}
-
-
 
 
 	@FXML
@@ -156,6 +138,7 @@ public class AdminController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		btRepresentNewCustomer.setText(String.valueOf(memberdao.todayMember()));
 		btCustomer.setOnAction(event -> handleCustomer(event));
 		btHome.setOnAction(event -> handleHome(event));
 		btRepresentNewCustomer.setOnAction(event -> handleCustomer(event));

@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
@@ -21,7 +23,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+
 
 public class MainController implements Initializable {
 	
@@ -31,25 +37,14 @@ public class MainController implements Initializable {
 	PreparedStatement pstmt = null; 
 	Boolean duplicatedId = false;
 	
-//	private static MemberDAO memberdao;
-//	private MemberVO member;
-
-	
-	private static MainController instance;
-	
-	public MainController() { 
-		instance = this; 
-	}
-	
-	public static MainController getInstance() {
-		return instance;
-	}
-	
-	public String id() {
-		return this.tfId.getText();
-	}
-	
+	MemberDAO memberdao = new MemberDAO();
+	static MemberVO member = null;
 	public static Map<String, MemberVO> map = new HashMap<>();
+	
+	public static String id() {
+		return member.getId();
+	}
+	
 
 	@FXML
 	private AnchorPane pnRoot;
@@ -121,6 +116,9 @@ public class MainController implements Initializable {
 
     @FXML
     private JFXButton btCancel;
+    
+    @FXML
+    private StackPane pnStack;
 
     
     public void handleCancel(ActionEvent event) {
@@ -190,6 +188,7 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void handleIdCheck(ActionEvent event) {
+		String alert = "사용할 수 있는 아이디입니다.";
 		try {
 			sql.setLength(0);
 			sql.append("select id from members where id = ?");	//이 아이디를 db에서 검색
@@ -199,10 +198,19 @@ public class MainController implements Initializable {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-					System.out.println("사용중인 아이디입니다.");
+					alert = "이미 사용중인 아이디입니다.";
 					duplicatedId = true;
-			}else
-				System.out.println("사용할 수 있는 아이디입니다.");
+			}
+			
+			JFXDialogLayout dialogLayout = new JFXDialogLayout();
+			JFXButton button = new JFXButton("OK");
+			JFXDialog dialog = new JFXDialog(pnStack, dialogLayout, JFXDialog.DialogTransition.TOP);
+			button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{dialog.close();});
+			
+			dialogLayout.setBody(new Text(alert));
+			dialogLayout.setActions(button);
+			dialog.show();
+
 
 		}catch (SQLException e) {
 			System.out.println("check Query");
@@ -213,55 +221,60 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void handleRegister(ActionEvent event) {
+		String alert = "회원 가입을 위해 정보를 빠짐 없이 입력했는지 확인해주세요.";
+		Boolean flag = true;
+		
 		String id = tfIdRegister.getText();
-		if(id.trim().length()==0) return;
+		if(id.trim().length()==0) flag = false;
 		String password = tfPwdRegister.getText();
-		if(password.trim().length()==0) return;
+		if(password.trim().length()==0)flag = false; 
 		String name = tfName.getText();
-		if(name.trim().length()==0) return;
+		if(name.trim().length()==0)flag = false;
 		String phone = tfPhone.getText();
-		if(phone.trim().length()==0) return;
+		if(phone.trim().length()==0)flag = false;
 		String addr = tfAddr.getText();
-		if(addr.trim().length()==0) return;
+		if(addr.trim().length()==0)flag = false;
 		String card = tfCard.getText();
-		if(card.trim().length()==0) return;
+		if(card.trim().length()==0)flag = false;
 		
-		if(duplicatedId==false) {
-			MemberVO member = new MemberVO(id,password,name,phone,addr,card);
-			map.put(member.getId(), member);
-			try {
-				sql.setLength(0);
-				sql.append("insert into members values(?,?,?,?,?,?)");
-				con = application.ConnUtil.getConnection();
-				pstmt = con.prepareStatement(sql.toString());
-				pstmt.setString(1, member.getId());
-				pstmt.setString(2, member.getPassword());
-				pstmt.setString(3, member.getName());
-				pstmt.setString(4, member.getPhone());
-				pstmt.setString(5, member.getAddr());
-				pstmt.setString(6, member.getCard());
-				int i = pstmt.executeUpdate();
-				System.out.println(i + "행이 추가되었습니다.");
-				
+		if(flag==true) {
+			if(duplicatedId==false) {
+				MemberVO member = new MemberVO(id,password,name,phone,addr,card);
+				map.put(member.getId(), member);
+				int i = memberdao.insertMember(member);
+				System.out.println("메인에서 확인 " + i);
+				alert = "가입 완료.\n로그인 해주세요.";
+					
 				tfAddr.setEditable(false);
+				tfCard.setEditable(false);
+				tfConfrimPwd.setEditable(false);
+				tfIdRegister.setEditable(false);
+				tfName.setEditable(false);
+				tfPhone.setEditable(false);
+				tfPwdRegister.setEditable(false);
 				
-			}catch(SQLException e) {
-				System.out.println("db(customer 테이블)에 안들어감");
-				e.printStackTrace();
+			}else if(!password.equals(tfConfrimPwd.getText())){
+				alert = "비밀번호를 확인해주세요.";
+			}else {
+				alert = "중복된 아이디입니다.";
 			}
-		}else if(!password.equals(tfConfrimPwd.getText())){
-			System.out.println("비밀번호를 확인해주세요.");
-		}else 
-			System.out.println("중복된 아이디입니다.");
+		}//end if flag
+		JFXDialogLayout dialogLayout = new JFXDialogLayout();
+		JFXButton button = new JFXButton("OK");
+		JFXDialog dialog = new JFXDialog(pnStack, dialogLayout, JFXDialog.DialogTransition.TOP);
+		button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{dialog.close();});
 		
-		try {if(pstmt!= null) pstmt.close();} catch(SQLException e) {} 
-		try {if(con!= null) con.close();} catch(SQLException e) {} 
+		dialogLayout.setBody(new Text(alert));
+		dialogLayout.setActions(button);
+		dialog.show();
+
 		return;
 	}
 
 	@FXML
 	public void handleSignin(ActionEvent event) {
 		try {
+			member = new MemberVO();
 			sql.setLength(0);
 			sql.append("select password from members where id = ?");
 			con = application.ConnUtil.getConnection();
@@ -285,6 +298,9 @@ public class MainController implements Initializable {
 						}
 					}else {		//customer
 						try {
+							member = memberdao.getMember(id);
+							System.out.println(member.toString());
+							map.put(id, member);
 							loadCustomer();
 						} catch (IOException e) {
 							System.out.println("지또에?");
@@ -340,4 +356,7 @@ public class MainController implements Initializable {
 		pnRoot.getChildren().setAll(pane);
 	}
 
+
+	
+	
 }

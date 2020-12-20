@@ -19,6 +19,7 @@ public class Main extends Application {
 			primaryStage.getIcons().add(new Image("image/icons8_closet_30px_3.png"));
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
