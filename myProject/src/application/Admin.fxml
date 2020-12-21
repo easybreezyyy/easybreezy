@@ -310,7 +310,7 @@
                               </AnchorPane>
                               <AnchorPane prefHeight="600.0" prefWidth="433.0">
                                  <children>
-                                    <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="67.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="img" fitHeight="300.0" fitWidth="300.0" layoutX="67.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
                                     <JFXButton fx:id="btLoad" alignment="CENTER" contentDisplay="CENTER" layoutX="167.0" layoutY="456.0" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Load">
                                        <font>
                                           <Font name="Tahoma Bold" size="18.0" />

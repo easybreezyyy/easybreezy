@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,11 +23,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class AdminController implements Initializable {
 
@@ -121,6 +126,8 @@ public class AdminController implements Initializable {
 
 	@FXML
 	private JFXButton btRepresentNewCustomer;
+	
+	@FXML private ImageView img; 
 
 	public void handleCustomer(ActionEvent event) {
 		pnAdminHome.setVisible(false);
@@ -155,8 +162,8 @@ public class AdminController implements Initializable {
 		loadMain();
 	}
 
-	@FXML
-	void handleDeleteMember(ActionEvent event) {
+	/** 멤버 삭제 */
+	@FXML void handleDeleteMember(ActionEvent event) {
 		String alert = "성공적으로 삭제되었습니다.";
 		CustomerTableVO ct = tbCustomers.getSelectionModel().getSelectedItem();
 		if(ct != null) {
@@ -176,8 +183,27 @@ public class AdminController implements Initializable {
 		}
 	}
 
-	@FXML
-	void handleSms(ActionEvent event) {
+	
+	/** 이미지 파일 업로드 */
+	public void fileChoose(ActionEvent event) {
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().add(new ExtensionFilter("JPG Files", "*.jpg"));
+		File f = fc.showOpenDialog(null);
+		if(f!=null) {
+			//파일이 잘 선택되었다면 이미지뷰에 보이게 하고 -> DONE
+			// db에 저장시키기
+			System.out.println(f.getAbsolutePath());
+			String url = "file:\\" + f.getAbsolutePath();
+			Image image = new Image(url);
+			img.setImage(image);
+			img.setSmooth(true);
+		}
+	}
+	
+	
+	
+	/** 문자 보내기 (CoolSMS) */
+	@FXML void handleSms(ActionEvent event) {
 
 	}
 
@@ -196,7 +222,10 @@ public class AdminController implements Initializable {
 		btHome.setOnAction(event -> handleHome(event));
 		btRepresentNewCustomer.setOnAction(event -> handleCustomer(event));
 		btItems.setOnAction(event -> handleItems(event));
+		btLoad.setOnAction(event-> fileChoose(event));
 	}
+
+
 
 	public void loadMain() throws IOException {
 		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
