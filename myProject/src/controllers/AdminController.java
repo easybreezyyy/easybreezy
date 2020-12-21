@@ -12,6 +12,8 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
 import application.CustomerTableVO;
+import application.ItemDAO;
+import application.ItemVO;
 import application.MemberDAO;
 import application.MemberVO;
 import javafx.collections.FXCollections;
@@ -37,8 +39,15 @@ public class AdminController implements Initializable {
 
 	MemberDAO memberdao = new MemberDAO();
 	MemberVO member;
+	ItemDAO itemdao = new ItemDAO();
+	ItemVO item;
+	String url = "/image/blank.png"; //여기다 블랭크 경로 집어넣기
+	Image image = new Image(url);
+	
 	
 	public static ObservableList<CustomerTableVO> customerList = FXCollections.observableArrayList();
+	public static ObservableList<ItemVO> itemList = FXCollections.observableArrayList();
+	
 
 	@FXML StackPane pnStack;
 	
@@ -95,7 +104,7 @@ public class AdminController implements Initializable {
 	private AnchorPane pnItems;
 
 	@FXML
-	private JFXListView<?> lsItems;
+	private JFXListView<ItemVO> lsItems;
 
 	@FXML
 	private JFXTextField tfStylenum;
@@ -127,7 +136,11 @@ public class AdminController implements Initializable {
 	@FXML
 	private JFXButton btRepresentNewCustomer;
 	
+	@FXML private JFXButton btUpdate;
+	
 	@FXML private ImageView img; 
+	
+	@FXML private JFXButton btNew; 
 
 	public void handleCustomer(ActionEvent event) {
 		pnAdminHome.setVisible(false);
@@ -148,6 +161,16 @@ public class AdminController implements Initializable {
 		pnRecent.setVisible(false);
 		pnCustomer.setVisible(false);
 		pnItems.setVisible(true);
+		btSave.setVisible(true);
+		btUpdate.setVisible(false);
+		tfBrand.setText("");
+		tfItemname.setText("");
+		tfPrice.setText("");
+		tfStock.setText("");
+		tfStylenum.setText("");
+		img.setImage(image);
+		tfStylenum.setEditable(true);
+		btNew.setVisible(false);
 	}
 
 	public void handleRecent(ActionEvent event) {
@@ -158,12 +181,14 @@ public class AdminController implements Initializable {
 	}
 
 	public void handleLogout(ActionEvent event) throws IOException {
+		lsItems.getItems().clear();
 		tbCustomers.getItems().clear();
 		loadMain();
 	}
 
 	/** 멤버 삭제 */
-	@FXML void handleDeleteMember(ActionEvent event) {
+	@FXML 
+	void handleDeleteMember(ActionEvent event) {
 		String alert = "성공적으로 삭제되었습니다.";
 		CustomerTableVO ct = tbCustomers.getSelectionModel().getSelectedItem();
 		if(ct != null) {
@@ -190,17 +215,156 @@ public class AdminController implements Initializable {
 		fc.getExtensionFilters().add(new ExtensionFilter("JPG Files", "*.jpg"));
 		File f = fc.showOpenDialog(null);
 		if(f!=null) {
-			//파일이 잘 선택되었다면 이미지뷰에 보이게 하고 -> DONE
-			// db에 저장시키기
-			System.out.println(f.getAbsolutePath());
-			String url = "file:\\" + f.getAbsolutePath();
+//			imagepath = f.getAbsolutePath();
+//			System.out.println(imagepath);
+			url = "file:\\" + f.getAbsolutePath();
 			Image image = new Image(url);
 			img.setImage(image);
 			img.setSmooth(true);
+			
+			
+			
 		}
 	}
 	
+	/**
+	 * 상품 정보 추가하는 메서드
+	 */
+	public void handleSave(ActionEvent event) {
+		String alert = "상품 정보를 정확히 입력했는지 확인해주세요."; 
+		Boolean flag = true;
+		
+		String stylenum = tfStylenum.getText().trim();
+		if(stylenum.length()==0) flag=false;
+		String itemname = tfItemname.getText().trim();
+		if(itemname.length()==0) flag=false;
+		String brand = tfBrand.getText().trim();
+		if(brand.length()==0) flag=false;
+		
+		int stock = 0;
+		if(tfStock.getText().trim().length()==0) 
+			flag = false;
+			else
+				stock = Integer.parseInt(tfStock.getText().trim());
+		
+		int price = 0;
+		if(tfPrice.getText().trim().length()==0) 
+			flag = false;
+			else
+				price = Integer.parseInt(tfPrice.getText().trim());	
+		
+		if(itemdao.checkDuplicate(stylenum)!=0) {
+			alert = "이미 존재하는 품번입니다.\n 다른 품번을 사용해주세요.";
+			flag = false;
+		}
+		
+		if(flag==true) {
+			item = new ItemVO(stylenum,itemname,brand,stock,url,price);
+			itemdao.insertItem(item);
+			itemList.add(item);
+			alert = "성공적으로 저장되었습니다.";
+		}
+		
+		JFXDialogLayout dialogLayout = new JFXDialogLayout();
+		JFXButton button = new JFXButton("OK");
+		JFXDialog dialog = new JFXDialog(pnStack, dialogLayout, JFXDialog.DialogTransition.TOP);
+		button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{dialog.close();});
+		
+		Text text = new Text(alert);
+		text.setFont(Font.font("Malgun Gothic"));
+		dialogLayout.setBody(text);
+		dialogLayout.setActions(button);
+		dialog.show();
+		
+		btNew.setVisible(true);
+		
+	}
 	
+	/**
+	 * 상품 정보 수정하는 메서드
+	 */
+	public void handleUpdate(ActionEvent event) {
+		String alert = "상품 정보를 정확히 입력했는지 확인해주세요."; 
+		Boolean flag = true;
+		
+		String stylenum = tfStylenum.getText().trim();
+		if(stylenum.length()==0) flag=false;
+		String itemname = tfItemname.getText().trim();
+		if(itemname.length()==0) flag=false;
+		String brand = tfBrand.getText().trim();
+		if(brand.length()==0) flag=false;
+		int stock = 0;
+		stock = Integer.parseInt(tfStock.getText().trim());
+		int price = 0;
+		price = Integer.parseInt(tfPrice.getText().trim());
+		
+		
+		if(flag==true) {
+			item = new ItemVO(stylenum,itemname,brand,stock,url,price);
+			itemdao.updateItem(item);
+			alert = "성공적으로 저장되었습니다.";
+		}
+		
+		JFXDialogLayout dialogLayout = new JFXDialogLayout();
+		JFXButton button = new JFXButton("OK");
+		JFXDialog dialog = new JFXDialog(pnStack, dialogLayout, JFXDialog.DialogTransition.TOP);
+		button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{dialog.close();});
+		
+		Text text = new Text(alert);
+		text.setFont(Font.font("Malgun Gothic"));
+		dialogLayout.setBody(text);
+		dialogLayout.setActions(button);
+		dialog.show();
+		
+		btNew.setVisible(true);
+		//itemdao.setItemList();
+	}
+	
+	/**
+	 * 상품 삭제 메서드
+	 */
+	@FXML
+	void handleDeleteItem(ActionEvent event) {
+		String stylenum = tfStylenum.getText().trim();
+		String alert = "성공적으로 삭제되었습니다.";
+		
+		itemdao.deleteItem(stylenum);
+		int k = itemList.indexOf(itemdao.getItem(stylenum));
+		itemList.remove(k);
+		
+		JFXDialogLayout dialogLayout = new JFXDialogLayout();
+		JFXButton button = new JFXButton("OK");
+		JFXDialog dialog = new JFXDialog(pnStack, dialogLayout, JFXDialog.DialogTransition.TOP);
+		button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{dialog.close();});
+		
+		Text text = new Text(alert);
+		text.setFont(Font.font("Malgun Gothic"));
+		dialogLayout.setBody(text);
+		dialogLayout.setActions(button);
+		dialog.show();
+	}
+
+	/**
+	 * 리스트 상품 선택시
+	 */
+	@FXML
+    void clickedItem(MouseEvent event) {
+		this.item = lsItems.getSelectionModel().getSelectedItem();
+		
+		tfStylenum.setText(item.getStylenum());
+		tfStylenum.setEditable(false);
+		tfItemname.setText(item.getItemname());
+		tfBrand.setText(item.getBrand());
+		tfStock.setText(String.valueOf(item.getStock()));
+		tfPrice.setText(String.valueOf(item.getPrice()));
+		
+		Image image = new Image(item.getImagepath());
+		img.setImage(image);
+		
+		btSave.setVisible(false);
+		btUpdate.setVisible(true);
+		btNew.setVisible(true);
+    }
 	
 	/** 문자 보내기 (CoolSMS) */
 	@FXML void handleSms(ActionEvent event) {
@@ -209,6 +373,7 @@ public class AdminController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		itemdao.setItemList();
 		memberdao.getCustomerTable();
 		colId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colCard.setCellValueFactory(new PropertyValueFactory<>("card"));
@@ -216,6 +381,7 @@ public class AdminController implements Initializable {
 		colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
 		colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 		tbCustomers.setItems(customerList);
+		lsItems.setItems(itemList);
 		
 		btRepresentNewCustomer.setText(String.valueOf(memberdao.todayMember()));
 		btCustomer.setOnAction(event -> handleCustomer(event));
@@ -223,6 +389,10 @@ public class AdminController implements Initializable {
 		btRepresentNewCustomer.setOnAction(event -> handleCustomer(event));
 		btItems.setOnAction(event -> handleItems(event));
 		btLoad.setOnAction(event-> fileChoose(event));
+		btSave.setOnAction(event->handleSave(event));
+		btDeleteItem.setOnAction(event->handleDeleteItem(event));
+		btUpdate.setOnAction(event->handleUpdate(event));
+		btNew.setOnAction(event->handleItems(event));
 	}
 
 
