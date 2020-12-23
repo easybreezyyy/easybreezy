@@ -41,9 +41,8 @@ public class AdminController implements Initializable {
 	MemberVO member;
 	ItemDAO itemdao = new ItemDAO();
 	ItemVO item;
-	String url = "/image/blank.png"; //여기다 블랭크 경로 집어넣기
+	String url = "/image/blank.png";
 	Image image = new Image(url);
-	
 	
 	public static ObservableList<CustomerTableVO> customerList = FXCollections.observableArrayList();
 	public static ObservableList<ItemVO> itemList = FXCollections.observableArrayList();
@@ -89,7 +88,6 @@ public class AdminController implements Initializable {
 
 	@FXML
 	private AnchorPane pnCustomer;
-
 
 	@FXML
 	private JFXButton btDeleteMember;
@@ -168,7 +166,7 @@ public class AdminController implements Initializable {
 		tfPrice.setText("");
 		tfStock.setText("");
 		tfStylenum.setText("");
-		img.setImage(image);
+		img.setImage(new Image("/image/blank.png"));
 		tfStylenum.setEditable(true);
 		btNew.setVisible(false);
 	}
@@ -215,15 +213,11 @@ public class AdminController implements Initializable {
 		fc.getExtensionFilters().add(new ExtensionFilter("JPG Files", "*.jpg"));
 		File f = fc.showOpenDialog(null);
 		if(f!=null) {
-//			imagepath = f.getAbsolutePath();
-//			System.out.println(imagepath);
 			url = "file:\\" + f.getAbsolutePath();
 			Image image = new Image(url);
 			img.setImage(image);
 			img.setSmooth(true);
-			
-			
-			
+			this.item.setImagepath(url);
 		}
 	}
 	
@@ -298,7 +292,6 @@ public class AdminController implements Initializable {
 		int price = 0;
 		price = Integer.parseInt(tfPrice.getText().trim());
 		
-		
 		if(flag==true) {
 			item = new ItemVO(stylenum,itemname,brand,stock,url,price);
 			itemdao.updateItem(item);
@@ -317,7 +310,9 @@ public class AdminController implements Initializable {
 		dialog.show();
 		
 		btNew.setVisible(true);
-		//itemdao.setItemList();
+		itemList.clear();
+		itemdao.setItemList();
+		lsItems.setItems(itemList);
 	}
 	
 	/**
@@ -357,14 +352,15 @@ public class AdminController implements Initializable {
 		tfBrand.setText(item.getBrand());
 		tfStock.setText(String.valueOf(item.getStock()));
 		tfPrice.setText(String.valueOf(item.getPrice()));
-		
-		Image image = new Image(item.getImagepath());
+		url = item.getImagepath();
+		image = new Image(url);
 		img.setImage(image);
 		
 		btSave.setVisible(false);
 		btUpdate.setVisible(true);
 		btNew.setVisible(true);
     }
+
 	
 	/** 문자 보내기 (CoolSMS) */
 	@FXML void handleSms(ActionEvent event) {
@@ -394,7 +390,6 @@ public class AdminController implements Initializable {
 		btUpdate.setOnAction(event->handleUpdate(event));
 		btNew.setOnAction(event->handleItems(event));
 	}
-
 
 
 	public void loadMain() throws IOException {

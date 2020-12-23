@@ -171,6 +171,7 @@ public class ItemDAO {
 				System.out.println(item.toString());
 				
 				controllers.AdminController.itemList.add(item);
+				controllers.CustomerController.allItems.add(item);
 			}
 		}catch(SQLException e) {
 			System.err.println("db 쿼리문 틀려서 item 정보 조회 실패");
@@ -178,7 +179,30 @@ public class ItemDAO {
 		}finally { application.ConnUtil.closeAll(con, pstmt, rs);}
 	}
 	
-
+	/**
+	 * 재고가 많은 순으로 정렬한 상품 리스트 세팅 메서드
+	 */
+	public void orderByStock() {
+		sql.setLength(0);
+		sql.append("select * from items order by stock desc");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ItemVO item = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3),
+						rs.getInt(4), rs.getString(5), rs.getInt(6));
+				
+				System.out.println(item.toString());
+				
+				controllers.CustomerController.allItems2.add(item);
+			}
+		}catch(SQLException e) {
+			System.err.println("db 쿼리문 틀려서 item 정보 조회 실패");
+			e.printStackTrace();
+		}finally { application.ConnUtil.closeAll(con, pstmt, rs);}
+	}
 
 }
 

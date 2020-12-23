@@ -6,6 +6,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -36,6 +37,14 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" GridPane.columnIndex="2">
+                     <image>
+                        <Image url="@../image/icons8_closet_30px_2.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="65.0" />
+                     </GridPane.margin>
+                  </ImageView>
                   <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" GridPane.columnIndex="1">
                      <image>
                         <Image url="@../image/icons8_clothes_50px_2.png" />
@@ -76,90 +85,10 @@
                         <Font name="Tahoma" size="15.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="35.0" fitWidth="35.0" GridPane.columnIndex="2">
-                     <image>
-                        <Image url="@../../../../../Users/leeji/AppData/Local/Temp/icons8_closet_30px_1.png" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets left="65.0" />
-                     </GridPane.margin>
-                  </ImageView>
                </children>
             </GridPane>
             <StackPane fx:id="pnStack">
                <children>
-                  <AnchorPane fx:id="pnItems" layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="1200.0" visible="false">
-                     <children>
-                        <GridPane hgap="50.0" layoutX="150.0" layoutY="113.0" prefHeight="480.0" prefWidth="900.0" vgap="10.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <VBox>
-                                 <children>
-                                    <ImageView fx:id="imageItem00" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label fx:id="lbBrand00" text="Brand" />
-                                    <Label fx:id="lbItemname00" text="Itemname" />
-                                 </children>
-                              </VBox>
-                              <VBox GridPane.columnIndex="1">
-                                 <children>
-                                    <ImageView fx:id="imageItem10" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label fx:id="lbBrand10" text="Brand" />
-                                    <Label fx:id="lbItemname10" text="Itemname" />
-                                 </children>
-                              </VBox>
-                              <VBox GridPane.rowIndex="1">
-                                 <children>
-                                    <ImageView fx:id="imageitem01" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label fx:id="lbBrand01" text="Brand" />
-                                    <Label fx:id="lbItemname01" text="Itemname" />
-                                 </children>
-                              </VBox>
-                              <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <ImageView fx:id="imageItem11" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label fx:id="lbBrand11" text="Brand" />
-                                    <Label fx:id="lbItemname11" text="Itemname" />
-                                 </children>
-                              </VBox>
-                              <VBox GridPane.columnIndex="2">
-                                 <children>
-                                    <ImageView fx:id="imageItem20" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label fx:id="lbBrand20" text="Brand" />
-                                    <Label fx:id="lbItemname20" text="Itemname" />
-                                 </children>
-                              </VBox>
-                              <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <children>
-                                    <ImageView fx:id="imageItem21" fitHeight="200.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label fx:id="lbBrand21" text="Brand" />
-                                    <Label fx:id="lbItemname21" text="Itemname" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </GridPane>
-                        <JFXTextField fx:id="tfSearch" focusColor="#b38eb1" layoutX="289.0" layoutY="39.0" prefHeight="58.0" prefWidth="415.0" promptText="BURBERRY">
-                           <font>
-                              <Font name="Tahoma" size="30.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXButton fx:id="btsearch" graphicTextGap="10.0" layoutX="711.0" layoutY="39.0" onAction="#handleSearch" prefHeight="58.0" prefWidth="150.0" style="-fx-background-color: #cfb9ce;" text="Search">
-                           <graphic>
-                              <FontAwesomeIconView glyphName="SEARCH" size="24" />
-                           </graphic>
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </JFXButton>
-                     </children>
-                  </AnchorPane>
                   <AnchorPane fx:id="pnCloset" prefHeight="200.0" prefWidth="200.0" visible="false">
                      <children>
                         <TableView layoutX="116.0" layoutY="62.0" prefHeight="450.0" prefWidth="968.0">
@@ -208,8 +137,14 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <JFXTextField fx:id="tfAccountPhone" focusColor="#b38eb1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <JFXTextField fx:id="tfAccountAddr" focusColor="#b38eb1" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <JFXTextField fx:id="tfAccountPhone" focusColor="#b38eb1" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Malgun Gothic" size="15.0" />
+                                 </font></JFXTextField>
+                              <JFXTextField fx:id="tfAccountAddr" focusColor="#b38eb1" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Malgun Gothic" size="15.0" />
+                                 </font></JFXTextField>
                               <Label text="ID :">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
@@ -288,9 +223,9 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="pnHome" prefHeight="600.0" prefWidth="1200.0">
+                  <AnchorPane fx:id="pnHome" prefHeight="600.0" prefWidth="1200.0" visible="false">
                      <children>
-                        <GridPane hgap="50.0" layoutX="150.0" layoutY="117.0" prefHeight="450.0" prefWidth="900.0" vgap="10.0">
+                        <GridPane alignment="CENTER" hgap="50.0" layoutX="150.0" layoutY="128.0" prefHeight="450.0" prefWidth="900.0" vgap="20.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -301,15 +236,15 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ImageView fitHeight="220.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" />
-                              <ImageView fitHeight="220.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                              <ImageView fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
-                              <ImageView fitHeight="220.0" fitWidth="267.0" layoutX="644.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                              <ImageView fitHeight="220.0" fitWidth="267.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ImageView fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <ImageView fx:id="mainItem0" fitHeight="220.0" fitWidth="267.0" onMouseEntered="#mouseEntered" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem1" fitHeight="220.0" fitWidth="267.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem2" fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="10.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem3" fitHeight="220.0" fitWidth="267.0" layoutX="644.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem4" fitHeight="220.0" fitWidth="267.0" layoutX="10.0" layoutY="10.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem5" fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="240.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
-                        <Label layoutX="107.0" layoutY="52.0" text="Newly Added">
+                        <Label layoutX="107.0" layoutY="52.0" text="The feed : highlights">
                            <font>
                               <Font name="Tahoma" size="36.0" />
                            </font>
@@ -321,6 +256,28 @@
                         </Text>
                      </children>
                   </AnchorPane>
+                  <VBox fx:id="pnItems" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <AnchorPane prefHeight="70.0" prefWidth="743.0">
+                           <children>
+                              <JFXTextField fx:id="tfSearch" focusColor="#b38eb1" layoutX="309.0" layoutY="3.0" prefHeight="60.0" prefWidth="400.0" promptText="BURBERRY">
+                                 <font>
+                                    <Font name="Tahoma" size="30.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXButton fx:id="btsearch" graphicTextGap="10.0" layoutX="727.0" layoutY="4.0" onAction="#handleSearch" prefHeight="58.0" prefWidth="150.0" style="-fx-background-color: #cfb9ce;" text="Search">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="SEARCH" size="24" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </AnchorPane>
+                        <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="100" prefHeight="600.0" prefWidth="636.0" />
+                     </children>
+                  </VBox>
                </children>
             </StackPane>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" text="OUR CLOSET" textFill="#b38eb1">
