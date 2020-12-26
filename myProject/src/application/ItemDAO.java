@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 /**
  * DB를 기반으로 하는 상품 CRUD 구현 클래스
- *
  */
 public class ItemDAO {
 
@@ -103,7 +102,7 @@ public class ItemDAO {
 	}
 	
 	/**
-	 * 상품 수정
+	 * 상품 정보 수정
 	 * @param itemVO
 	 * @return 수정된 행 수
 	 */
@@ -170,8 +169,10 @@ public class ItemDAO {
 				
 				System.out.println(item.toString());
 				
+				if(rs.getInt(4) > 0)	//재고가 있을 경우에만 사용자 화면에 추가
+					controllers.CustomerController.allItems.add(item);
+
 				controllers.AdminController.itemList.add(item);
-				controllers.CustomerController.allItems.add(item);
 			}
 		}catch(SQLException e) {
 			System.err.println("db 쿼리문 틀려서 item 정보 조회 실패");
@@ -184,7 +185,7 @@ public class ItemDAO {
 	 */
 	public void orderByStock() {
 		sql.setLength(0);
-		sql.append("select * from items order by stock desc");
+		sql.append("select * from items where stock > 0 order by stock desc");
 		try {
 			con = application.ConnUtil.getConnection();
 			pstmt = con.prepareStatement(sql.toString());
@@ -204,5 +205,53 @@ public class ItemDAO {
 		}finally { application.ConnUtil.closeAll(con, pstmt, rs);}
 	}
 
+	/**
+	 * 브랜드명으로 검색
+	 */
+	public void searchByBrand(String brand) {
+		controllers.CustomerController.allItems3.clear();
+		sql.setLength(0);
+		sql.append("select * from items where stock > 0 and brand like '%' || ? || '%'");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, brand);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ItemVO item = new ItemVO(rs.getString(1), rs.getString(2), rs.getString(3),
+						rs.getInt(4), rs.getString(5), rs.getInt(6));
+				
+				System.out.println(item.toString());
+				
+				controllers.CustomerController.allItems3.add(item);
+			}
+		}catch(SQLException e) {
+			System.err.println("db 쿼리문 틀려서 item 정보 조회 실패");
+			e.printStackTrace();
+		}finally { application.ConnUtil.closeAll(con, pstmt, rs);}
+	}
+	
+	
+	/** 상품 주문시 재고 반영 */
+	public int rentItem(ItemVO item) {
+		int i = 0;
+		sql.setLength(0);
+		sql.append("update items set stock = ? where stylenum = ?");
+		try {
+			con = ConnUtil.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, item.getStock());
+			pstmt.setString(2, item.getStylenum());
+			i = pstmt.executeUpdate();
+			System.out.println("DAO에서 확인. 수정된 행 : "+ i);
+		}catch(SQLException e) {
+			System.err.println("db 쿼리문 틀려서 item 삭제 실패");
+			e.printStackTrace();
+		}finally { application.ConnUtil.closeAll(con, pstmt, rs);}
+		return i;	
+	}
+	
+	
 }
 

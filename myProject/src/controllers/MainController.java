@@ -23,6 +23,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -40,7 +42,7 @@ public class MainController implements Initializable {
 	
 	MemberDAO memberdao = new MemberDAO();
 	static MemberVO member = null;
-	public static Map<String, MemberVO> map = new HashMap<>();
+	//public static Map<String, MemberVO> map = new HashMap<>();
 	
 	public static String id() {
 		return member.getId();
@@ -243,7 +245,6 @@ public class MainController implements Initializable {
 		if(flag==true) {
 			if(duplicatedId==false) {
 				MemberVO member = new MemberVO(id,password,name,phone,addr,card);
-				map.put(member.getId(), member);
 				int i = memberdao.insertMember(member);
 				System.out.println("메인에서 확인 " + i);
 				alert = "가입 완료.\n로그인 해주세요.";
@@ -278,6 +279,17 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void handleSignin(ActionEvent event) {
+		signin();
+	}
+	
+	public void handleSignin(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER)
+			signin();
+		else
+			return;
+	}
+
+	public void signin() {
 		try {
 			member = new MemberVO();
 			sql.setLength(0);
@@ -305,7 +317,6 @@ public class MainController implements Initializable {
 						try {
 							member = memberdao.getMember(id);
 							System.out.println(member.toString());
-							map.put(id, member);
 							loadCustomer();
 						} catch (IOException e) {
 							System.out.println("지또에?");
@@ -320,7 +331,7 @@ public class MainController implements Initializable {
 			System.out.println("쿼리문 틀렸다");
 			e.printStackTrace();
 		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
-		return;
+		
 	}
 
 	public void handleDeliverMode(ActionEvent event) {
@@ -343,9 +354,8 @@ public class MainController implements Initializable {
 		btDeliverMode.setOnAction(event->handleDeliverMode(event));
 		btCancel.setOnAction(event->handleCancel(event));
 		btDeliverSignin.setOnAction(event->handleDeliverSignin(event));
-		//tfPwd.onActionProperty().addListener(handleSignin(event));
+		tfPwd.setOnKeyPressed(event->handleSignin(event));
 	}
-
 
 	public void loadAdmin() throws IOException {
 		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Admin.fxml"));

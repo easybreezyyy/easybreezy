@@ -4,20 +4,15 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="pnRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
-      <ImageView fitHeight="718.0" fitWidth="1210.0" layoutX="-5.0" layoutY="-8.0" pickOnBounds="true">
-         <image>
-            <Image url="@../image/imagebackground.png" />
-         </image>
-      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dfd0de" height="1290.0" layoutX="383.0" layoutY="-543.0" rotate="-80.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="483.0" />
       <StackPane fx:id="pnStack" layoutX="350.0" layoutY="25.0">
          <children>
             <AnchorPane fx:id="pnRegister" prefHeight="650.0" prefWidth="500.0" style="-fx-background-color: #fafaf4;" visible="false">
@@ -93,7 +88,7 @@
                         <JFXPasswordField fx:id="tfPwd" focusColor="#b38eb1" promptText="Password" />
                      </children>
                   </VBox>
-                  <JFXButton fx:id="btSignin" alignment="CENTER" contentDisplay="CENTER" layoutX="100.0" layoutY="446.0" onAction="#handleSignin" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Sign in">
+                  <JFXButton fx:id="btSignin" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="100.0" layoutY="446.0" onAction="#handleSignin" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Sign in">
                      <font>
                         <Font name="Tahoma Bold" size="18.0" />
                      </font>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
@@ -92,96 +93,7 @@
       				</GridPane>
             <StackPane fx:id="pnStack">
                <children>
-                  <AnchorPane fx:id="pnCustomer" prefHeight="600.0" prefWidth="1200.0" visible="false">
-                     <children>
-                        <TableView fx:id="tbCustomers" layoutX="50.0" layoutY="52.0" prefHeight="500.0" prefWidth="876.0">
-                          <columns>
-                            <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
-                            <TableColumn fx:id="colName" prefWidth="101.0" text="Name" />
-                              <TableColumn fx:id="colPhone" prefWidth="179.0" text="Phone" />
-                              <TableColumn fx:id="colCard" prefWidth="290.0" text="Card" />
-                              <TableColumn fx:id="colStatus" prefWidth="170.0" text="Status" />
-                          </columns>
-                        </TableView>
-                        <JFXButton fx:id="btDeleteMember" alignment="CENTER" contentDisplay="CENTER" layoutX="987.0" layoutY="492.0" onAction="#handleDeleteMember" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Delete">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                        </JFXButton>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="pnRecent" prefHeight="600.0" prefWidth="1200.0" visible="false">
-                     <children>
-                        <TableView layoutX="50.0" layoutY="41.0" prefHeight="250.0" prefWidth="530.0">
-                          <columns>
-                            <TableColumn prefWidth="86.0" text="이름" />
-                              <TableColumn prefWidth="94.0" text="ID" />
-                              <TableColumn prefWidth="117.0" text="품번" />
-                              <TableColumn prefWidth="81.0" text="배송상태" />
-                            <TableColumn prefWidth="151.0" text="주소" />
-                          </columns>
-                        </TableView>
-                        <Label layoutX="236.0" layoutY="14.0" text="금일 주문 리스트" textFill="#69625f">
-                           <font>
-                              <Font name="Malgun Gothic" size="18.0" />
-                           </font>
-                        </Label>
-                        <TableView layoutX="627.0" layoutY="40.0" prefHeight="250.0" prefWidth="530.0">
-                           <columns>
-                              <TableColumn prefWidth="86.0" text="이름" />
-                              <TableColumn prefWidth="94.0" text="ID" />
-                              <TableColumn prefWidth="123.0" text="품번" />
-                              <TableColumn prefWidth="103.0" text="반납일" />
-                              <TableColumn prefWidth="123.0" text="연체일" />
-                           </columns>
-                        </TableView>
-                        <TableView layoutX="50.0" layoutY="338.0" prefHeight="250.0" prefWidth="530.0">
-                           <columns>
-                              <TableColumn prefWidth="86.0" text="이름" />
-                              <TableColumn prefWidth="90.0" text="ID" />
-                              <TableColumn prefWidth="109.0" text="품번" />
-                              <TableColumn prefWidth="101.0" text="수거상태" />
-                              <TableColumn prefWidth="143.0" text="주소" />
-                           </columns>
-                        </TableView>
-                        <Label layoutX="236.0" layoutY="307.0" text="금일 수거 리스트" textFill="#69625f">
-                           <font>
-                              <Font name="Malgun Gothic" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="821.0" layoutY="14.0" text="미수거 리스트" textFill="#69625f">
-                           <font>
-                              <Font name="Malgun Gothic" size="18.0" />
-                           </font>
-                        </Label>
-                        <JFXButton fx:id="btSms" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="15.0" layoutX="840.0" layoutY="439.0" onAction="#handleSms" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="SMS">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                        </JFXButton>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="pnAdminHome" prefHeight="600.0" prefWidth="1200.0">
-                     <children>
-                        <Circle fill="#fafaf5" layoutX="570.0" layoutY="400.0" radius="100.0" stroke="#fafaf4" strokeLineCap="ROUND" strokeType="INSIDE" />
-                        <Label layoutX="389.0" layoutY="91.0" text="Today's">
-                           <font>
-                              <Font name="Tahoma" size="48.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="551.0" layoutY="178.0" text="New Customer">
-                           <font>
-                              <Font name="Tahoma" size="48.0" />
-                           </font>
-                        </Label>
-                        <JFXButton fx:id="btRepresentNewCustomer" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="15.0" layoutX="481.0" layoutY="355.0" prefHeight="91.0" prefWidth="178.0" style="-fx-background-color: TRANSPARENT; -fx-border-radius: 100;" text="몇 명" textFill="#9e948f">
-                           <font>
-                              <Font size="48.0" />
-                           </font>
-                        </JFXButton>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="pnItems" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0">
+                  <AnchorPane fx:id="pnItems" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" visible="false">
                      <children>
                         <HBox layoutY="14.0" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -365,6 +277,69 @@
                               </AnchorPane>
                            </children>
                         </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pnCustomer" prefHeight="600.0" prefWidth="1200.0" visible="false">
+                     <children>
+                        <TableView fx:id="tbCustomers" layoutX="50.0" layoutY="52.0" prefHeight="500.0" prefWidth="876.0">
+                          <columns>
+                            <TableColumn fx:id="colId" prefWidth="158.0" text="ID" />
+                            <TableColumn fx:id="colName" minWidth="8.0" prefWidth="111.0" text="Name" />
+                              <TableColumn fx:id="colPhone" prefWidth="169.0" text="Phone" />
+                              <TableColumn fx:id="colCard" prefWidth="328.0" text="Card" />
+                              <TableColumn fx:id="colStatus" prefWidth="109.0" text="Status" />
+                          </columns>
+                        </TableView>
+                        <JFXButton fx:id="btDeleteMember" alignment="CENTER" contentDisplay="CENTER" layoutX="987.0" layoutY="492.0" onAction="#handleDeleteMember" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Delete">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pnAdminHome" prefHeight="600.0" prefWidth="1200.0">
+                     <children>
+                        <Circle fill="#fafaf5" layoutX="570.0" layoutY="400.0" radius="100.0" stroke="#fafaf4" strokeLineCap="ROUND" strokeType="INSIDE" />
+                        <Label layoutX="389.0" layoutY="91.0" text="Today's">
+                           <font>
+                              <Font name="Tahoma" size="48.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="551.0" layoutY="178.0" text="New Customer">
+                           <font>
+                              <Font name="Tahoma" size="48.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="btRepresentNewCustomer" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="15.0" layoutX="481.0" layoutY="355.0" prefHeight="91.0" prefWidth="178.0" style="-fx-background-color: TRANSPARENT; -fx-border-radius: 100;" text="몇 명" textFill="#9e948f">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pnRecent" prefHeight="600.0" prefWidth="1200.0">
+                     <children>
+                        <TableView fx:id="tbRecent" layoutX="66.0" layoutY="41.0" prefHeight="522.0" prefWidth="933.0">
+                          <columns>
+                              <TableColumn fx:id="col_rentalnumber" prefWidth="98.0" text="주문번호" />
+                            <TableColumn fx:id="col_name" prefWidth="129.0" text="이름" />
+                              <TableColumn fx:id="col_id" prefWidth="119.0" text="ID" />
+                              <TableColumn fx:id="col_stylenum" prefWidth="173.0" text="품번" />
+                              <TableColumn fx:id="col_status" prefWidth="104.0" text="대여상태" />
+                            <TableColumn fx:id="col_address" prefWidth="309.0" text="주소" />
+                          </columns>
+                        </TableView>
+                        <Label fx:id="lbRecent" layoutX="66.0" layoutY="14.0" text="금일 주문 리스트" textFill="#69625f">
+                           <font>
+                              <Font name="Malgun Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="btSms" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="15.0" layoutX="1046.0" layoutY="503.0" onAction="#handleSms" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="SMS">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXComboBox fx:id="cbRecent" focusColor="#b38eb1" layoutX="837.0" layoutY="8.0" onAction="#select" prefHeight="29.0" prefWidth="162.0" promptText="Select a list" />
                      </children>
                   </AnchorPane>
                </children>

@@ -14,11 +14,11 @@ public class Main extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
 			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
 			primaryStage.setTitle("Our Closet");
 			primaryStage.getIcons().add(new Image("image/icons8_closet_30px_3.png"));
-			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
 			primaryStage.show();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

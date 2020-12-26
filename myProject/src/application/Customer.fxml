@@ -77,7 +77,7 @@
                         <Font name="Tahoma" size="15.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="btHome" defaultButton="true" onAction="#handleHome" prefHeight="45.0" prefWidth="252.0" text="  HOME">
+                  <JFXButton fx:id="btHome" onAction="#handleHome" prefHeight="45.0" prefWidth="252.0" text="  HOME">
                      <graphic>
                         <FontAwesomeIconView glyphName="HOME" size="35" />
                      </graphic>
@@ -89,38 +89,6 @@
             </GridPane>
             <StackPane fx:id="pnStack">
                <children>
-                  <AnchorPane fx:id="pnCloset" prefHeight="200.0" prefWidth="200.0" visible="false">
-                     <children>
-                        <TableView layoutX="116.0" layoutY="62.0" prefHeight="450.0" prefWidth="968.0">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="주문번호" />
-                            <TableColumn prefWidth="160.0" text="품명" />
-                              <TableColumn prefWidth="171.0" text="브랜드" />
-                              <TableColumn prefWidth="198.0" text="대여일" />
-                              <TableColumn prefWidth="154.0" text="대여상태" />
-                          </columns>
-                        </TableView>
-                        <HBox layoutX="398.0" layoutY="533.0">
-                           <children>
-                              <Label text="이번달 잔여 대여 횟수 : ">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbCountRemain" text="몇">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                              </Label>
-                              <Label text=" 회">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
                   <AnchorPane fx:id="pnMyAccount" prefHeight="200.0" prefWidth="200.0" visible="false">
                      <children>
                         <GridPane layoutX="143.0" layoutY="67.0" prefHeight="369.0" prefWidth="900.0">
@@ -223,44 +191,11 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="pnHome" prefHeight="600.0" prefWidth="1200.0" visible="false">
-                     <children>
-                        <GridPane alignment="CENTER" hgap="50.0" layoutX="150.0" layoutY="128.0" prefHeight="450.0" prefWidth="900.0" vgap="20.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <ImageView fx:id="mainItem0" fitHeight="220.0" fitWidth="267.0" onMouseEntered="#mouseEntered" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <ImageView fx:id="mainItem1" fitHeight="220.0" fitWidth="267.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <ImageView fx:id="mainItem2" fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="10.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                              <ImageView fx:id="mainItem3" fitHeight="220.0" fitWidth="267.0" layoutX="644.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <ImageView fx:id="mainItem4" fitHeight="220.0" fitWidth="267.0" layoutX="10.0" layoutY="10.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                              <ImageView fx:id="mainItem5" fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="240.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                           </children>
-                        </GridPane>
-                        <Label layoutX="107.0" layoutY="52.0" text="The feed : highlights">
-                           <font>
-                              <Font name="Tahoma" size="36.0" />
-                           </font>
-                        </Label>
-                        <Text fx:id="welcome" layoutX="938.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
-                           <font>
-                              <Font name="Tahoma" size="24.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </AnchorPane>
-                  <VBox fx:id="pnItems" prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="pnItems" prefHeight="200.0" prefWidth="100.0" visible="false">
                      <children>
                         <AnchorPane prefHeight="70.0" prefWidth="743.0">
                            <children>
-                              <JFXTextField fx:id="tfSearch" focusColor="#b38eb1" layoutX="309.0" layoutY="3.0" prefHeight="60.0" prefWidth="400.0" promptText="BURBERRY">
+                              <JFXTextField fx:id="tfSearch" focusColor="#b38eb1" layoutX="290.0" layoutY="3.0" onKeyPressed="#handleEnter" prefHeight="60.0" prefWidth="419.0" promptText="ex) BURBERRY">
                                  <font>
                                     <Font name="Tahoma" size="30.0" />
                                  </font>
@@ -278,6 +213,207 @@
                         <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="100" prefHeight="600.0" prefWidth="636.0" />
                      </children>
                   </VBox>
+                  <AnchorPane fx:id="pnOrder" visible="false">
+                     <children>
+                        <VBox layoutX="300.0" layoutY="83.0" prefHeight="468.0" prefWidth="600.0" style="-fx-border-style: solid; -fx-background-color: #fff;" AnchorPane.topAnchor="83.0">
+                           <children>
+                              <GridPane hgap="15.0" prefHeight="370.0" prefWidth="600.0" vgap="5.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="367.0" minWidth="10.0" prefWidth="193.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="523.0" minWidth="10.0" prefWidth="392.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="10.0" layoutY="268.0" style="-fx-background-color: #fafaf4;">
+                                       <children>
+                                          <Label text="Brand : ">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="브랜드">
+                                             <font>
+                                                <Font name="Malgun Gothic" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" style="-fx-background-color: #fafaf4;" GridPane.rowIndex="1">
+                                       <children>
+                                          <Label text="Itemname :">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label prefWidth="116.0" text="품명">
+                                             <font>
+                                                <Font name="Malgun Gothic" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" style="-fx-background-color: #fafaf4;" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label text="Rental Date :">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label prefWidth="116.0" text="대여일">
+                                             <font>
+                                                <Font name="Malgun Gothic" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" style="-fx-background-color: #fafaf4;" GridPane.rowIndex="3">
+                                       <children>
+                                          <Label text="Return Date :">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label prefWidth="116.0" text="수거일">
+                                             <font>
+                                                <Font name="Malgun Gothic" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" style="-fx-background-color: #fafaf4;" GridPane.rowIndex="4">
+                                       <children>
+                                          <Label text="Rental Times :">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="이번달 대여 횟수">
+                                             <font>
+                                                <Font name="Malgun Gothic" size="20.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Label fx:id="lbItemname" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbRentalDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbReturnDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbRentalTimes" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbBrand" text="Label" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                              <AnchorPane prefHeight="101.0" prefWidth="600.0">
+                                 <children>
+                                    <JFXButton fx:id="btOrder" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="334.0" layoutY="20.0" onAction="#handleOrder" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Order">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="18.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btCancelOrder" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="162.0" layoutY="20.0" onAction="#handleCancelOrder" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Cancel">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="18.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pnHome" prefHeight="600.0" prefWidth="1200.0">
+                     <children>
+                        <GridPane alignment="CENTER" hgap="50.0" layoutX="150.0" layoutY="128.0" prefHeight="450.0" prefWidth="900.0" vgap="20.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ImageView fx:id="mainItem0" fitHeight="220.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem1" fitHeight="220.0" fitWidth="267.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem2" fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="10.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem3" fitHeight="220.0" fitWidth="267.0" layoutX="644.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem4" fitHeight="220.0" fitWidth="267.0" layoutX="10.0" layoutY="10.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="mainItem5" fitHeight="220.0" fitWidth="267.0" layoutX="327.0" layoutY="240.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                           </children>
+                        </GridPane>
+                        <Label layoutX="107.0" layoutY="52.0" text="The Feed : Highlights / Quick Order">
+                           <font>
+                              <Font name="Tahoma" size="36.0" />
+                           </font>
+                        </Label>
+                        <Text fx:id="welcome" layoutX="835.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                           <font>
+                              <Font name="Tahoma" size="24.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pnCloset" prefHeight="200.0" prefWidth="200.0" visible="false">
+                     <children>
+                        <TableView fx:id="tbCloset" layoutX="116.0" layoutY="62.0" prefHeight="450.0" prefWidth="968.0">
+                          <columns>
+                            <TableColumn fx:id="col_rn" prefWidth="75.0" text="주문번호" />
+                              <TableColumn fx:id="col_rentalDate" prefWidth="144.0" text="주문일" />
+                              <TableColumn fx:id="col_returnDate" prefWidth="161.0" text="수거일" />
+                            <TableColumn fx:id="col_itemName" prefWidth="314.0" text="품명" />
+                              <TableColumn fx:id="col_brand" prefWidth="147.0" text="브랜드" />
+                              <TableColumn fx:id="col_status" prefWidth="126.0" text="대여상태" />
+                          </columns>
+                        </TableView>
+                        <HBox layoutX="398.0" layoutY="533.0">
+                           <children>
+                              <Label text="이번달 잔여 대여 횟수 : ">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbCountRemain" text="몇">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Label text=" 회">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
                </children>
             </StackPane>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" text="OUR CLOSET" textFill="#b38eb1">

@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXListView;
@@ -16,12 +17,18 @@ import application.ItemDAO;
 import application.ItemVO;
 import application.MemberDAO;
 import application.MemberVO;
+import application.RecentTableVO;
+import application.RentalDAO;
+import application.ReturnDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -34,6 +41,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class AdminController implements Initializable {
 
@@ -41,14 +49,18 @@ public class AdminController implements Initializable {
 	MemberVO member;
 	ItemDAO itemdao = new ItemDAO();
 	ItemVO item;
+	RentalDAO rentaldao = new RentalDAO();
+	ReturnDAO returndao = new ReturnDAO();
 	String url = "/image/blank.png";
 	Image image = new Image(url);
 	
+	//-----------------------------------테이블과 리스트 세팅을 위한 리스트--------------------------------------//
 	public static ObservableList<CustomerTableVO> customerList = FXCollections.observableArrayList();
+	public static ObservableList<RecentTableVO> recentList = FXCollections.observableArrayList();
 	public static ObservableList<ItemVO> itemList = FXCollections.observableArrayList();
 	
 
-	@FXML StackPane pnStack;
+	@FXML private StackPane pnStack;
 	
 	@FXML
 	private AnchorPane pnRoot;
@@ -96,9 +108,6 @@ public class AdminController implements Initializable {
 	private AnchorPane pnRecent;
 
 	@FXML
-	private JFXButton btSms;
-
-	@FXML
 	private AnchorPane pnItems;
 
 	@FXML
@@ -140,6 +149,37 @@ public class AdminController implements Initializable {
 	
 	@FXML private JFXButton btNew; 
 
+	@FXML
+    private TableView<RecentTableVO> tbRecent;
+
+    @FXML
+    private TableColumn<RecentTableVO, Integer> col_rentalnumber;
+
+    @FXML
+    private TableColumn<RecentTableVO, String> col_name;
+
+    @FXML
+    private TableColumn<RecentTableVO, String> col_id;
+
+    @FXML
+    private TableColumn<RecentTableVO, String> col_stylenum;
+
+    @FXML
+    private TableColumn<RecentTableVO, String> col_status;
+
+    @FXML
+    private TableColumn<RecentTableVO, String> col_address;
+
+    @FXML
+    private Label lbRecent;
+
+    @FXML
+    private JFXButton btSms;
+
+    @FXML
+    private JFXComboBox<String> cbRecent;
+	
+	//-------------------------------------상단 버튼 눌렀을 때 화면 이동---------------------------------------//
 	public void handleCustomer(ActionEvent event) {
 		pnAdminHome.setVisible(false);
 		pnItems.setVisible(false);
@@ -172,10 +212,14 @@ public class AdminController implements Initializable {
 	}
 
 	public void handleRecent(ActionEvent event) {
+		recentList.clear();
 		pnAdminHome.setVisible(false);
 		pnItems.setVisible(false);
 		pnCustomer.setVisible(false);
 		pnRecent.setVisible(true);
+		cbRecent.getSelectionModel().select(0);
+		rentaldao.getRecentTable();
+		tbRecent.setItems(recentList);
 	}
 
 	public void handleLogout(ActionEvent event) throws IOException {
@@ -183,6 +227,8 @@ public class AdminController implements Initializable {
 		tbCustomers.getItems().clear();
 		loadMain();
 	}
+	
+	//--------------------------------------회원 관리 관련 메서드--------------------------------------------//
 
 	/** 멤버 삭제 */
 	@FXML 
@@ -205,7 +251,14 @@ public class AdminController implements Initializable {
 			dialog.show();
 		}
 	}
+	
+	/** 문자 보내기 (CoolSMS) */
+	@FXML void handleSms(ActionEvent event) {
 
+	}
+
+	
+	//-----------------------------------------상품 관련 메서드------------------------------------------//
 	
 	/** 이미지 파일 업로드 */
 	public void fileChoose(ActionEvent event) {
@@ -362,10 +415,35 @@ public class AdminController implements Initializable {
     }
 
 	
-	/** 문자 보내기 (CoolSMS) */
-	@FXML void handleSms(ActionEvent event) {
-
-	}
+	//------------------------------------------대여 관련 메서드--------------------------------------------------//
+	
+	/** Recent에서 콤보박스 선택시 보여질 테이블을 구성하는 메서드*/
+	 @FXML
+	 void select(ActionEvent event) {
+		 recentList.clear();
+		 String s = cbRecent.getSelectionModel().getSelectedItem().toString();
+		 if(s.equals("주문")) {
+			lbRecent.setText("금일 주문 목록");
+			rentaldao.getRecentTable();
+			 return;
+		 }
+		 if(s.equals("수거")) {
+			 lbRecent.setText("금일 수거 목록");
+			 returndao.getReturnTable();
+			 return;
+		 }
+		 if(s.equals("미수거")) {
+			 lbRecent.setText("금일 미수거 목록");
+			 
+			 return;
+		 }
+		 
+		 tbRecent.setItems(recentList);
+	    }
+	
+	
+	
+	//----------------------------------------기본 화면 구성------------------------------------------------------//
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -379,6 +457,16 @@ public class AdminController implements Initializable {
 		tbCustomers.setItems(customerList);
 		lsItems.setItems(itemList);
 		
+		ObservableList<String> todayList = FXCollections.observableArrayList("주문","수거","미수거");
+		cbRecent.setItems(todayList);
+		col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+		col_address.setCellValueFactory(new PropertyValueFactory<>("address"));
+		col_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+		col_rentalnumber.setCellValueFactory(new PropertyValueFactory<>("rentalnumber"));
+		col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+		col_stylenum.setCellValueFactory(new PropertyValueFactory<>("stylenum"));
+		//tbRecent.setItems(recentList);
+		
 		btRepresentNewCustomer.setText(String.valueOf(memberdao.todayMember()));
 		btCustomer.setOnAction(event -> handleCustomer(event));
 		btHome.setOnAction(event -> handleHome(event));
@@ -389,11 +477,23 @@ public class AdminController implements Initializable {
 		btDeleteItem.setOnAction(event->handleDeleteItem(event));
 		btUpdate.setOnAction(event->handleUpdate(event));
 		btNew.setOnAction(event->handleItems(event));
+		cbRecent.setOnAction(event->select(event));
 	}
 
 
 	public void loadMain() throws IOException {
-		AnchorPane pane = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
-		pnRoot.getChildren().setAll(pane);
+		try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("/application/Main.fxml"));
+				Parent root = loader.load();
+				controllers.MainController con = loader.getController();
+				Scene scene = new Scene(root);
+				Stage stage = (Stage) btLogout.getScene().getWindow();
+				stage.setScene(scene);
+				stage.show();
+			} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 	}
 }
