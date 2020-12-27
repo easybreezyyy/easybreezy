@@ -248,14 +248,9 @@ public class MainController implements Initializable {
 				int i = memberdao.insertMember(member);
 				System.out.println("메인에서 확인 " + i);
 				alert = "가입 완료.\n로그인 해주세요.";
-					
-				tfAddr.setEditable(false);
-				tfCard.setEditable(false);
-				tfConfrimPwd.setEditable(false);
-				tfIdRegister.setEditable(false);
-				tfName.setEditable(false);
-				tfPhone.setEditable(false);
-				tfPwdRegister.setEditable(false);
+				
+				pnRegister.setVisible(false);
+				pnSignin.setVisible(true);
 				
 			}else if(!password.equals(tfConfrimPwd.getText())){
 				alert = "비밀번호를 확인해주세요.";

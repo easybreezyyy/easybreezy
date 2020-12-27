@@ -1,14 +1,36 @@
 package application;
 
+
 public class RecentTableVO {
 	
 	private Integer rentalnum;
+	private Integer returnnum;
 	private String id;
 	private String name;
 	private String stylenum;
 	private String status;
 	private String address;
+	private String returndate;
+	private String rentaldate;
 	
+	public String getRentaldate() {
+		return rentaldate;
+	}
+	public void setRentaldate(String rentaldate) {
+		this.rentaldate = rentaldate;
+	}
+	public String getReturndate() {
+		return returndate;
+	}
+	public void setReturndate(String returndate) {
+		this.returndate = returndate;
+	}
+	public Integer getReturnnum() {
+		return returnnum;
+	}
+	public void setReturnnum(Integer returnnum) {
+		this.returnnum = returnnum;
+	}
 	public String getId() {
 		return id;
 	}
@@ -45,21 +67,6 @@ public class RecentTableVO {
 	public void setRentalnum(Integer rentalnum) {
 		this.rentalnum = rentalnum;
 	}
-	public RecentTableVO() {}
-	
-	public RecentTableVO(Integer rentalnum, String id, String name, String stylenum, String status, String address) {
-		this.rentalnum = rentalnum;
-		this.id = id;
-		this.name = name;
-		this.stylenum = stylenum;
-		this.status = status;
-		this.address = address;
-	}
-	
-	@Override
-	public String toString() {
-		return "RecentTableVO [rentalnum=" + rentalnum + ", id=" + id + ", name=" + name + ", stylenum=" + stylenum
-				+ ", status=" + status + ", address=" + address + "]";
-	}
+
 
 }

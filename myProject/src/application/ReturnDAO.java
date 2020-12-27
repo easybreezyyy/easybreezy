@@ -18,8 +18,8 @@ public class ReturnDAO {
 	public int insertData(ReturnVO rt) {
 		int i = 0;
 		sql.setLength(0);
-		sql.append("insert into returnlist values(return_seq.nextval, ?,?,?,?,?,?,?,?)");
-				//(seq, id, stylenum, rentaldate, returndate, name, phone, address, status)
+		sql.append("insert into returnlist values(return_seq.nextval, ?,?,?,?,?,?,?,?,?)");
+				//(seq, id, stylenum, rentaldate, returndate, name, phone, address, status, rentalnum)
 		try {
 			con = ConnUtil.getConnection();
 			pstmt = con.prepareStatement(sql.toString());
@@ -31,6 +31,7 @@ public class ReturnDAO {
 			pstmt.setString(6, rt.getPhone());
 			pstmt.setString(7, rt.getAddress());
 			pstmt.setString(8, rt.getStatus());
+			pstmt.setInt(9, rt.getRentalnum());
 			i = pstmt.executeUpdate();
 			System.out.println(i + "행 DB insert 성공");
 			
@@ -46,7 +47,8 @@ public class ReturnDAO {
 	public void getReturnTable() {
 		RecentTableVO rt = null;
 		sql.setLength(0);
-		sql.append("select rentalnum, name, id, stylenum, status, address from returnlist " 
+		sql.append("select rentalnum, returnnum, to_char(returndate, 'RRRR/MM/DD') as returndate, "
+				+ "name, id, stylenum, status, address from returnlist " 
 				+ "where trunc(returndate) = trunc(sysdate)");
 		try {
 			con = application.ConnUtil.getConnection();
@@ -56,10 +58,12 @@ public class ReturnDAO {
 			while(rs.next()) {
 				rt = new RecentTableVO();
 				
+				rt.setRentalnum(rs.getInt("rentalnum"));
+				rt.setReturndate(rs.getString("returndate"));
 				rt.setAddress(rs.getString("address"));
 				rt.setStatus(rs.getString("status"));
 				rt.setStylenum(rs.getString("stylenum"));
-				rt.setRentalnum(rs.getInt("rentalnum")); 
+				rt.setReturnnum(rs.getInt("returnnum")); 
 				rt.setId(rs.getString("id"));
 				rt.setName(rs.getString("name"));
 				
@@ -71,12 +75,15 @@ public class ReturnDAO {
 		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
 	}
 	
-	/** 미수거 목록 조회 메서드 */
+	/** 금일 연체 목록 조회 메서드 */
 	public void getOverdueTable() {
 		RecentTableVO rt = null;
 		sql.setLength(0);
-		sql.append("select rentalnum, name, id, stylenum, status, address from returnlist " 
-				+ "where trunc(returndate) < trunc(sysdate)");	//해결해야할 부분
+		sql.append("select rentalnum, address, status, stylenum, returnnum, id, name, "
+				+ "to_char(returndate, 'RRRR/MM/DD') as returndate, "
+				+ "to_char(rentaldate, 'RRRR/MM/DD') as rentaldate from returnlist "
+				+ "where returndate < trunc(sysdate) "
+				+ "order by returndate asc");
 		try {
 			con = application.ConnUtil.getConnection();
 			pstmt = con.prepareStatement(sql.toString());
@@ -85,12 +92,15 @@ public class ReturnDAO {
 			while(rs.next()) {
 				rt = new RecentTableVO();
 				
+				rt.setRentalnum(rs.getInt("rentalnum"));
 				rt.setAddress(rs.getString("address"));
 				rt.setStatus(rs.getString("status"));
 				rt.setStylenum(rs.getString("stylenum"));
-				rt.setRentalnum(rs.getInt("rentalnum")); 
+				rt.setReturnnum(rs.getInt("returnnum"));
 				rt.setId(rs.getString("id"));
 				rt.setName(rs.getString("name"));
+				rt.setReturndate(rs.getString("returndate"));
+				rt.setRentaldate(rs.getString("rentaldate"));
 				
 				AdminController.recentList.add(rt);
 			}

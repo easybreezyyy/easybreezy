@@ -93,6 +93,33 @@
       				</GridPane>
             <StackPane fx:id="pnStack">
                <children>
+                  <AnchorPane fx:id="pnRecent" prefHeight="600.0" prefWidth="1200.0" visible="false">
+                     <children>
+                        <TableView fx:id="tbRecent" layoutX="66.0" layoutY="44.0" prefHeight="522.0" prefWidth="964.0">
+                          <columns>
+                              <TableColumn fx:id="col_rentalnum" prefWidth="71.0" text="주문번호" />
+                              <TableColumn fx:id="col_returnnum" prefWidth="83.0" text="반납번호" />
+                              <TableColumn fx:id="col_returndate" prefWidth="132.0" text="반납일" />
+                            <TableColumn fx:id="col_name" prefWidth="91.0" text="이름" />
+                              <TableColumn fx:id="col_id" prefWidth="105.0" text="ID" />
+                              <TableColumn fx:id="col_stylenum" prefWidth="114.0" text="품번" />
+                              <TableColumn fx:id="col_status" prefWidth="122.0" text="대여상태" />
+                            <TableColumn fx:id="col_address" prefWidth="245.0" text="주소" />
+                          </columns>
+                        </TableView>
+                        <Label fx:id="lbRecent" layoutX="66.0" layoutY="14.0" text="금일 주문 리스트" textFill="#69625f">
+                           <font>
+                              <Font name="Malgun Gothic" size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="btSms" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="15.0" layoutX="1046.0" layoutY="503.0" onAction="#handleSms" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="SMS">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXComboBox fx:id="cbRecent" focusColor="#b38eb1" layoutX="868.0" layoutY="8.0" onAction="#select" prefHeight="29.0" prefWidth="162.0" promptText="Select a list" />
+                     </children>
+                  </AnchorPane>
                   <AnchorPane fx:id="pnItems" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" visible="false">
                      <children>
                         <HBox layoutY="14.0" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -315,31 +342,6 @@
                               <Font size="48.0" />
                            </font>
                         </JFXButton>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="pnRecent" prefHeight="600.0" prefWidth="1200.0">
-                     <children>
-                        <TableView fx:id="tbRecent" layoutX="66.0" layoutY="41.0" prefHeight="522.0" prefWidth="933.0">
-                          <columns>
-                              <TableColumn fx:id="col_rentalnumber" prefWidth="98.0" text="주문번호" />
-                            <TableColumn fx:id="col_name" prefWidth="129.0" text="이름" />
-                              <TableColumn fx:id="col_id" prefWidth="119.0" text="ID" />
-                              <TableColumn fx:id="col_stylenum" prefWidth="173.0" text="품번" />
-                              <TableColumn fx:id="col_status" prefWidth="104.0" text="대여상태" />
-                            <TableColumn fx:id="col_address" prefWidth="309.0" text="주소" />
-                          </columns>
-                        </TableView>
-                        <Label fx:id="lbRecent" layoutX="66.0" layoutY="14.0" text="금일 주문 리스트" textFill="#69625f">
-                           <font>
-                              <Font name="Malgun Gothic" size="18.0" />
-                           </font>
-                        </Label>
-                        <JFXButton fx:id="btSms" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="15.0" layoutX="1046.0" layoutY="503.0" onAction="#handleSms" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="SMS">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXComboBox fx:id="cbRecent" focusColor="#b38eb1" layoutX="837.0" layoutY="8.0" onAction="#select" prefHeight="29.0" prefWidth="162.0" promptText="Select a list" />
                      </children>
                   </AnchorPane>
                </children>

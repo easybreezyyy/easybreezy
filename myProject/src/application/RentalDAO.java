@@ -68,8 +68,6 @@ public class RentalDAO {
 				rt.setRentalnum(rs.getInt("rentalnum"));
 				rt.setReturnDate(rs.getString("returndate"));
 				rt.setRentalDate(rs.getString("rentaldate"));
-				//rt.setRentalDate(rs.getTimestamp("rentaldate"));
-				//rt.setReturnDate(rs.getTimestamp("returndate"));
 				
 				CustomerController.rentalList.add(rt);
 			}
@@ -112,6 +110,26 @@ public class RentalDAO {
 		
 	}
 	
-	
+	/** 주문번호 조회 - ReturnVO에 값을 할당해주기 위한 메서드 */
+	public int curRentalnum() {
+		int i = 0;
+		sql.setLength(0);
+		sql.append("select rentalnum from rentallist where rownum <= 1 order by rentalnum desc");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				i = rs.getInt(1);
+			}
+			System.out.println(i);
+		}catch (SQLException e) {
+			System.out.println("테이블 연동 실패");
+			e.printStackTrace();
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+		
+		return i;
+	}
 	
 }

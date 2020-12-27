@@ -13,6 +13,7 @@ public class ReturnVO {
 	private String phone;
 	private String address;
 	private String status;
+	private int rentalnum;
 	
 	public int getReturnnum() {
 		return returnnum;
@@ -85,26 +86,14 @@ public class ReturnVO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public int getRentalnum() {
+		return rentalnum;
+	}
+
+	public void setRentalnum(int rentalnum) {
+		this.rentalnum = rentalnum;
+	}
 	
-	public ReturnVO() {}
-
-	public ReturnVO(int returnnum, String id, String stylenum, Date rentaldate, Date returndate, String name,
-			String phone, String address, String status) {
-		this.returnnum = returnnum;
-		this.id = id;
-		this.stylenum = stylenum;
-		this.rentaldate = rentaldate;
-		this.returndate = returndate;
-		this.name = name;
-		this.phone = phone;
-		this.address = address;
-		this.status = status;
-	}
-
-	@Override
-	public String toString() {
-		return "ReturnVO [returnnum=" + returnnum + ", id=" + id + ", stylenum=" + stylenum + ", rentaldate="
-				+ rentaldate + ", returndate=" + returndate + ", name=" + name + ", phone=" + phone + ", address="
-				+ address + ", status=" + status + "]";
-	}
+	
 }

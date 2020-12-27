@@ -3,6 +3,7 @@ package controllers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -153,7 +154,7 @@ public class AdminController implements Initializable {
     private TableView<RecentTableVO> tbRecent;
 
     @FXML
-    private TableColumn<RecentTableVO, Integer> col_rentalnumber;
+    private TableColumn<RecentTableVO, Integer> col_rentalnum;
 
     @FXML
     private TableColumn<RecentTableVO, String> col_name;
@@ -169,6 +170,12 @@ public class AdminController implements Initializable {
 
     @FXML
     private TableColumn<RecentTableVO, String> col_address;
+    
+    @FXML
+    private TableColumn<RecentTableVO, Integer> col_returnnum;
+    
+    @FXML
+    private TableColumn<RecentTableVO, String> col_returndate;
 
     @FXML
     private Label lbRecent;
@@ -218,7 +225,7 @@ public class AdminController implements Initializable {
 		pnCustomer.setVisible(false);
 		pnRecent.setVisible(true);
 		cbRecent.getSelectionModel().select(0);
-		rentaldao.getRecentTable();
+		//rentaldao.getRecentTable();
 		tbRecent.setItems(recentList);
 	}
 
@@ -425,19 +432,24 @@ public class AdminController implements Initializable {
 		 if(s.equals("주문")) {
 			lbRecent.setText("금일 주문 목록");
 			rentaldao.getRecentTable();
-			 return;
+			col_returndate.setVisible(false);
+			col_returnnum.setVisible(false);
+			return;
 		 }
 		 if(s.equals("수거")) {
 			 lbRecent.setText("금일 수거 목록");
 			 returndao.getReturnTable();
+			 col_returndate.setVisible(true);
+			 col_returnnum.setVisible(true);
 			 return;
 		 }
-		 if(s.equals("미수거")) {
-			 lbRecent.setText("금일 미수거 목록");
-			 
+		 if(s.equals("연체")) {
+			 lbRecent.setText("금일 연체 목록");
+			 returndao.getOverdueTable();		 
+			 col_returndate.setVisible(true);
+			 col_returnnum.setVisible(true);
 			 return;
 		 }
-		 
 		 tbRecent.setItems(recentList);
 	    }
 	
@@ -457,15 +469,16 @@ public class AdminController implements Initializable {
 		tbCustomers.setItems(customerList);
 		lsItems.setItems(itemList);
 		
-		ObservableList<String> todayList = FXCollections.observableArrayList("주문","수거","미수거");
+		ObservableList<String> todayList = FXCollections.observableArrayList("주문","수거","연체");
 		cbRecent.setItems(todayList);
 		col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
 		col_address.setCellValueFactory(new PropertyValueFactory<>("address"));
 		col_name.setCellValueFactory(new PropertyValueFactory<>("name"));
-		col_rentalnumber.setCellValueFactory(new PropertyValueFactory<>("rentalnumber"));
+		col_rentalnum.setCellValueFactory(new PropertyValueFactory<>("rentalnum"));
 		col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
 		col_stylenum.setCellValueFactory(new PropertyValueFactory<>("stylenum"));
-		//tbRecent.setItems(recentList);
+		col_returnnum.setCellValueFactory(new PropertyValueFactory<>("returnnum"));
+		col_returndate.setCellValueFactory(new PropertyValueFactory<>("returndate"));
 		
 		btRepresentNewCustomer.setText(String.valueOf(memberdao.todayMember()));
 		btCustomer.setOnAction(event -> handleCustomer(event));

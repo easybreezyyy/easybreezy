@@ -393,12 +393,15 @@ public class CustomerController implements Initializable {
 		rental.setStatus("대여중");	rental.setStylenum(item.getStylenum());
 		rental.setRentaldate(today);	rental.setReturndate(returnDate);
 		int i = rentaldao.insertData(rental);
+		int k = rentaldao.curRentalnum();
+		System.out.println(k);
 		
 		rt = new ReturnVO();
 		rt.setAddress(member.getAddr());	rt.setId(member.getId());
 		rt.setName(member.getName());	rt.setPhone(member.getPhone());
 		rt.setStylenum(item.getStylenum()); 	rt.setRentaldate(today);
 		rt.setReturndate(returnDate);	rt.setStatus("미수거");
+		rt.setRentalnum(k);
 		int j = returndao.insertData(rt);
 		
 		System.out.println(i + "행 추가를 Customer Controller에서 확인");
