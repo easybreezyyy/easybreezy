@@ -42,7 +42,6 @@ public class MainController implements Initializable {
 	
 	MemberDAO memberdao = new MemberDAO();
 	static MemberVO member = null;
-	//public static Map<String, MemberVO> map = new HashMap<>();
 	
 	public static String id() {
 		return member.getId();

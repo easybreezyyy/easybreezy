@@ -2,3 +2,7 @@
 	-fx-font-family: "Malgun Gothic";
 	-fx-font-size: 12pt;
 }
+
+.body-background{
+	-fx-background-color: #ffffff;
+}

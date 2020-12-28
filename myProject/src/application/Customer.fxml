@@ -150,7 +150,10 @@
                                  </font></Label>
                               <JFXTextField fx:id="tfAccountCard" focusColor="#b38eb1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label fx:id="lbAccountId" text="User ID" GridPane.columnIndex="1" />
-                              <Label fx:id="lbAccountName" text="Username" GridPane.columnIndex="3" />
+                              <Label fx:id="lbAccountName" text="Username" GridPane.columnIndex="3">
+                                 <font>
+                                    <Font name="Malgun Gothic" size="15.0" />
+                                 </font></Label>
                               <JFXPasswordField fx:id="tfAccountPassword" focusColor="#b38eb1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <JFXPasswordField fx:id="tfAccountConfirmpwd" focusColor="#b38eb1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                            </children>
@@ -383,7 +386,7 @@
                   </AnchorPane>
                   <AnchorPane fx:id="pnCloset" prefHeight="200.0" prefWidth="200.0" visible="false">
                      <children>
-                        <TableView fx:id="tbCloset" layoutX="116.0" layoutY="62.0" prefHeight="450.0" prefWidth="968.0">
+                        <TableView fx:id="tbCloset" layoutX="116.0" layoutY="62.0" prefHeight="450.0" prefWidth="968.0" stylesheets="@Style.css">
                           <columns>
                             <TableColumn fx:id="col_rn" prefWidth="75.0" text="주문번호" />
                               <TableColumn fx:id="col_rentalDate" prefWidth="144.0" text="주문일" />

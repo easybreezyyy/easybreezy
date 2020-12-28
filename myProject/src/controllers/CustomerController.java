@@ -250,7 +250,7 @@ public class CustomerController implements Initializable {
     @FXML
     private TableColumn<RentalTableVO, String> col_status;
 
-    //------------------------------------상단 각 버튼 클릭 시 화면 이동-------------------------------------//
+    //-------------------------------------------상단 각 버튼 클릭 시 화면 이동-------------------------------------------------//
 	public void handleCloset(ActionEvent event) {
 		rentalList.clear();
 		rentaldao.getRentalTable(member.getId());
@@ -390,11 +390,11 @@ public class CustomerController implements Initializable {
 		rental = new RentalVO();
 		rental.setAddress(member.getAddr());	rental.setId(member.getId());
 		rental.setName(member.getName());	rental.setPhone(member.getPhone());
-		rental.setStatus("대여중");	rental.setStylenum(item.getStylenum());
+		rental.setStatus("준비중");	rental.setStylenum(item.getStylenum());
 		rental.setRentaldate(today);	rental.setReturndate(returnDate);
 		int i = rentaldao.insertData(rental);
 		int k = rentaldao.curRentalnum();
-		System.out.println(k);
+		System.out.println("rentalnum 확인 : " + k);
 		
 		rt = new ReturnVO();
 		rt.setAddress(member.getAddr());	rt.setId(member.getId());
@@ -403,6 +403,8 @@ public class CustomerController implements Initializable {
 		rt.setReturndate(returnDate);	rt.setStatus("미수거");
 		rt.setRentalnum(k);
 		int j = returndao.insertData(rt);
+		
+		memberdao.updateStatus("준비중", member.getPhone());
 		
 		System.out.println(i + "행 추가를 Customer Controller에서 확인");
 		System.out.println(j + "행 추가를 Customer Controller에서 확인");

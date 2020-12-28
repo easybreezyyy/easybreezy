@@ -79,36 +79,15 @@
             </GridPane>
             <StackPane fx:id="pnStack" prefHeight="600.0" prefWidth="1200.0">
                <children>
-                  <VBox fx:id="pnCollect" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" visible="false">
+                  <VBox fx:id="pnDelivery" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" visible="false">
                      <children>
-                        <JFXComboBox fx:id="cbState1" focusColor="#b38eb1" onAction="#getState" prefHeight="50.0" prefWidth="200.0" promptText="지역을 선택해주세요" />
-                        <TableView fx:id="tbCollect" prefHeight="400.0" prefWidth="200.0">
-                           <columns>
-                              <TableColumn prefWidth="115.0" text="이름" />
-                              <TableColumn prefWidth="497.0" text="주소" />
-                              <TableColumn minWidth="0.0" prefWidth="235.0" text="연락처" />
-                              <TableColumn prefWidth="151.0" text="품번" />
-                           </columns>
-                           <VBox.margin>
-                              <Insets left="100.0" right="100.0" />
-                           </VBox.margin>
-                        </TableView>
-                        <JFXButton fx:id="btCompleteCollect" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" onAction="#handleCompleteCollect" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: #b38eb1;" text="Complete">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                        </JFXButton>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="pnDelivery" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
-                     <children>
-                        <JFXComboBox fx:id="cbState" focusColor="#b38eb1" onAction="#getState" prefHeight="50.0" prefWidth="200.0" promptText="지역을 선택해주세요" />
-                        <TableView fx:id="tbDelivery" prefHeight="400.0" prefWidth="200.0">
+                        <JFXComboBox fx:id="cbState" focusColor="#b38eb1" onAction="#getState" prefHeight="50.0" prefWidth="200.0" promptText="지역을 선택해주세요" stylesheets="@Style.css" />
+                        <TableView fx:id="tbDelivery" prefHeight="400.0" prefWidth="200.0" stylesheets="@Style.css">
                           <columns>
-                            <TableColumn prefWidth="115.0" text="이름" />
-                            <TableColumn prefWidth="497.0" text="주소" />
-                              <TableColumn minWidth="0.0" prefWidth="235.0" text="연락처" />
-                              <TableColumn prefWidth="151.0" text="품번" />
+                            <TableColumn fx:id="col_name" prefWidth="115.0" text="이름" />
+                            <TableColumn fx:id="col_addr" prefWidth="497.0" text="주소" />
+                              <TableColumn fx:id="col_phone" minWidth="0.0" prefWidth="235.0" text="연락처" />
+                              <TableColumn fx:id="col_stylenum" prefWidth="151.0" text="품번" />
                           </columns>
                            <VBox.margin>
                               <Insets left="100.0" right="100.0" />
@@ -118,6 +97,39 @@
                            <font>
                               <Font name="Tahoma Bold" size="18.0" />
                            </font>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="pnCollect" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <AnchorPane prefHeight="103.0" prefWidth="1200.0">
+                           <children>
+                              <JFXComboBox fx:id="cbState1" focusColor="#b38eb1" layoutX="500.0" layoutY="27.0" onAction="#getState1" prefHeight="50.0" prefWidth="200.0" promptText="지역을 선택해주세요" stylesheets="@Style.css" />
+                              <Label alignment="BOTTOM_LEFT" layoutX="104.0" layoutY="72.0" prefHeight="23.0" prefWidth="869.0" text="*반납일이 오래된 기준으로 정렬되어 있습니다.">
+                                 <font>
+                                    <Font name="Malgun Gothic" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <TableView fx:id="tbCollect" prefHeight="400.0" prefWidth="200.0" stylesheets="@Style.css">
+                           <columns>
+                              <TableColumn fx:id="c_col_name" prefWidth="115.0" text="이름" />
+                              <TableColumn fx:id="c_col_addr" prefWidth="497.0" text="주소" />
+                              <TableColumn fx:id="c_col_phone" minWidth="0.0" prefWidth="235.0" text="연락처" />
+                              <TableColumn fx:id="c_col_stylenum" prefWidth="151.0" text="품번" />
+                           </columns>
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <JFXButton fx:id="btCompleteCollect" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" onAction="#handleCompleteCollect" prefHeight="60.0" prefWidth="150.0" style="-fx-background-color: #b38eb1;" text="Complete">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="30.0" />
+                           </VBox.margin>
                         </JFXButton>
                      </children>
                   </VBox>

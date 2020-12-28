@@ -95,7 +95,7 @@
                <children>
                   <AnchorPane fx:id="pnRecent" prefHeight="600.0" prefWidth="1200.0" visible="false">
                      <children>
-                        <TableView fx:id="tbRecent" layoutX="66.0" layoutY="44.0" prefHeight="522.0" prefWidth="964.0">
+                        <TableView fx:id="tbRecent" layoutX="66.0" layoutY="44.0" prefHeight="522.0" prefWidth="964.0" stylesheets="@Style.css">
                           <columns>
                               <TableColumn fx:id="col_rentalnum" prefWidth="71.0" text="주문번호" />
                               <TableColumn fx:id="col_returnnum" prefWidth="83.0" text="반납번호" />
@@ -308,7 +308,7 @@
                   </AnchorPane>
                   <AnchorPane fx:id="pnCustomer" prefHeight="600.0" prefWidth="1200.0" visible="false">
                      <children>
-                        <TableView fx:id="tbCustomers" layoutX="50.0" layoutY="52.0" prefHeight="500.0" prefWidth="876.0">
+                        <TableView fx:id="tbCustomers" layoutX="50.0" layoutY="52.0" prefHeight="500.0" prefWidth="876.0" stylesheets="@Style.css">
                           <columns>
                             <TableColumn fx:id="colId" prefWidth="158.0" text="ID" />
                             <TableColumn fx:id="colName" minWidth="8.0" prefWidth="111.0" text="Name" />

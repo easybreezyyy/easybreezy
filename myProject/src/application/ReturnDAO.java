@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import controllers.AdminController;
+import controllers.DeliverController;
 
 public class ReturnDAO {
 
@@ -108,6 +109,43 @@ public class ReturnDAO {
 			System.out.println("테이블 연동 실패");
 			e.printStackTrace();
 		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+	}
+	
+	/** 테이블 세팅 메서드 
+	 * Deliver - Collect 메뉴 클릭시
+	 * 예상 반납일이 오래된 순으로 (연체가 오래된 순으로) 정렬
+	 */
+	public void getCollectTable(String state) {
+		CollectTableVO ct = null;
+		sql.setLength(0);
+		sql.append("select name,phone,address,stylenum,rentalnum,returnnum from returnlist "
+				+ "where status = '미수거' and address like '%' || ? || '%' and returndate <= trunc(sysdate) "
+				+ "order by returndate asc");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, state);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ct = new CollectTableVO();
+				
+				ct.setAddress(rs.getString("address"));
+				ct.setName(rs.getString("name"));
+				ct.setPhone(rs.getString("phone"));
+				ct.setStylenum(rs.getString("stylenum"));
+				ct.setRentalnum(rs.getInt("rentalnum"));
+				ct.setReturnnum(rs.getInt("returnnum"));
+				
+				System.out.println(ct);
+				DeliverController.collectList.add(ct);
+			}
+		} catch (SQLException e) {
+			System.out.println("테이블 연동 실패");
+			e.printStackTrace();
+		} finally {
+			application.ConnUtil.closeAll(con, pstmt, rs);
+		}
 	}
 	
 	

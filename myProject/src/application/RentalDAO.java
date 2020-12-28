@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import controllers.AdminController;
 import controllers.CustomerController;
+import controllers.DeliverController;
 
 /** DB기반 RentalList CRUD 구현 클래스 */
 public class RentalDAO {
@@ -132,4 +133,79 @@ public class RentalDAO {
 		return i;
 	}
 	
+	/** Deliver - Complete 버튼 눌렀을 때 
+	 * 배달 완료시 status 업데이트 
+	 */
+	public int updateStatus(String status,int rentalnum) {
+		int i = 0;
+		sql.setLength(0);
+		sql.append("update rentallist set status = ? where rentalnum = ?");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setString(1, status);
+			pstmt.setInt(2, rentalnum);
+			i = pstmt.executeUpdate();
+			System.out.println("from DAO : " + i);
+		}catch (SQLException e) {
+			System.out.println("DB 테이블 연동 실패");
+			e.printStackTrace();
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+		return i;
+	}	
+	
+	/** 테이블 세팅 메서드 
+	 * Deliver - Delivery 메뉴 클릭시
+	 */
+	public void getDeliveryTable(String state) {
+		DeliveryTableVO dt = null;
+		sql.setLength(0);
+		sql.append("select name,phone,address,stylenum,rentalnum from rentallist where status = ? and address like '%' || ? || '%'");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, "준비중");
+			pstmt.setString(2, state);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				dt = new DeliveryTableVO();
+
+				dt.setAddress(rs.getString("address"));
+				dt.setName(rs.getString("name"));
+				dt.setPhone(rs.getString("phone"));
+				dt.setStylenum(rs.getString("stylenum"));
+				dt.setRentalnum(rs.getInt("rentalnum"));
+
+				DeliverController.deliveryList.add(dt);
+			}
+		} catch (SQLException e) {
+			System.out.println("테이블 연동 실패");
+			e.printStackTrace();
+		} finally {
+			application.ConnUtil.closeAll(con, pstmt, rs);
+		}
+	}
+	
+	/** Deliver - Collect - Complete 버튼 눌렀을 때
+	 * 반납 완료시 대여 테이블에서 데이터 삭제
+	 */
+	public int deleteData(int rentalnum) {
+		int i = 0;
+		sql.setLength(0);
+		sql.append("delete from rentallist where rentalnum = ?");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setInt(1, rentalnum);
+			i = pstmt.executeUpdate();
+			System.out.println(i + "행이 실행되었습니다.");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+		
+		return i;
+		
+	}
 }

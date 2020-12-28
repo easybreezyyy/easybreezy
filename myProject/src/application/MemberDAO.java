@@ -230,8 +230,29 @@ public class MemberDAO {
 		}catch (SQLException e) {
 			System.out.println("테이블 연동 실패");
 			e.printStackTrace();
-		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
-		
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}	
 	}
+	
+	/** Deliver - Delivery - Complete 버튼 눌렀을 때 / Customer - 상품 주문시
+	 *  주문한 사용자의 대여상태를 변경하는 메서드
+	 */
+	public int updateStatus(String status, String phone) {
+		int i = 0;
+		sql.setLength(0);
+		sql.append("update members set status = ? where phone = ?");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setString(1, status);
+			pstmt.setString(2, phone);
+			i = pstmt.executeUpdate();
+			System.out.println("from DAO : " + i);
+		}catch (SQLException e) {
+			System.out.println("DB 테이블 연동 실패");
+			e.printStackTrace();
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+		return i;
+	}	
+	
 	
 }
