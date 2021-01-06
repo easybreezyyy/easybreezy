@@ -200,6 +200,9 @@ public class AdminController implements Initializable {
     @FXML
     private JFXButton btSend;
     
+    @FXML
+    private JFXButton btCancelSms;
+    
     
 	//-------------------------------------상단 버튼 눌렀을 때 화면 이동---------------------------------------//
 	public void handleCustomer(ActionEvent event) {
@@ -231,6 +234,7 @@ public class AdminController implements Initializable {
 		img.setImage(new Image("/image/blank.png"));
 		tfStylenum.setEditable(true);
 		btNew.setVisible(false);
+		btDeleteItem.setDisable(true);
 	}
 
 	public void handleRecent(ActionEvent event) {
@@ -273,57 +277,6 @@ public class AdminController implements Initializable {
 		}
 	}
 	
-	/** 문자 보내기 (CoolSMS) */
-	@FXML void goToSms(ActionEvent event) {
-		pnSms.setVisible(true);
-	}
-	
-	@FXML
-	public void handleSend(ActionEvent event) {
-		String text = taSms.getText();
-		CustomerTableVO ct = tbCustomers.getSelectionModel().getSelectedItem();
-		String phone = ct.getPhone();
-		System.out.println(phone);
-		String alert = "발송 완료하였습니다.";
-		
-		if(phone!=null) {
-			String api_key = "##";
-		    String api_secret = "##";
-		    Message coolsms = new Message(api_key, api_secret);
-	
-		    // 4 params(to, from, type, text) are mandatory. must be filled
-		    HashMap<String, String> params = new HashMap<String, String>();
-		    params.put("to", phone);
-		    params.put("from", "01058740013");
-		    params.put("type", "SMS");
-		    params.put("text", text);
-		    params.put("app_version", "test app 1.2"); // application name and version
-	
-		    try {
-		      JSONObject obj = (JSONObject) coolsms.send(params);
-		      System.out.println(obj.toString());
-		      
-		    } catch (CoolsmsException e) {
-		      System.out.println(e.getMessage());
-		      System.out.println(e.getCode());
-		    }
-		}else
-			alert = "문자 발송에 실패하였습니다.\n 고객 핸드폰번호 또는 문자 글자수를(45자 내) 확인해주세요.";
-		
-		JFXDialogLayout dialogLayout = new JFXDialogLayout();
-		JFXButton button = new JFXButton("OK");
-		JFXDialog dialog = new JFXDialog(pnStack, dialogLayout, JFXDialog.DialogTransition.TOP);
-		button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{dialog.close();});
-		
-		Text tt = new Text(alert);
-		tt.setFont(Font.font("Malgun Gothic"));
-		dialogLayout.setBody(tt);
-		dialogLayout.setActions(button);
-		dialog.show();
-	    pnSms.setVisible(false);
-		
-	}
-
 	
 	//-----------------------------------------상품 관련 메서드------------------------------------------//
 	
@@ -479,6 +432,7 @@ public class AdminController implements Initializable {
 		btSave.setVisible(false);
 		btUpdate.setVisible(true);
 		btNew.setVisible(true);
+		btDeleteItem.setDisable(false);
     }
 
 	
@@ -513,7 +467,63 @@ public class AdminController implements Initializable {
 		 tbRecent.setItems(recentList);
 	    }
 	
-	
+	 
+	 /** 문자 보내기 (CoolSMS) */
+		@FXML void goToSms(ActionEvent event) {
+			pnSms.setVisible(true);
+		}
+		
+		@FXML
+		public void handleSend(ActionEvent event) {
+			String text = taSms.getText();
+			int cnt = taSms.getLength();
+			RecentTableVO rt = tbRecent.getSelectionModel().getSelectedItem();
+			String phone = rt.getPhone();
+			System.out.println(phone);
+			String alert = "발송 완료하였습니다.";
+			
+			if(phone!=null && cnt <= 45) {
+				String api_key = "##";
+			    String api_secret = "##";
+			    Message coolsms = new Message(api_key, api_secret);
+		
+			    HashMap<String, String> params = new HashMap<String, String>();
+			    params.put("to", phone);
+			    params.put("from", "01058740013");
+			    params.put("type", "SMS");
+			    params.put("text", text);
+			    params.put("app_version", "test app 1.2"); // application name and version
+		
+			    try {
+			      JSONObject obj = (JSONObject) coolsms.send(params);
+			      System.out.println(obj.toString());
+			      
+			    } catch (CoolsmsException e) {
+			      System.out.println(e.getMessage());
+			      System.out.println(e.getCode());
+			    }
+			}else
+				alert = "문자 발송에 실패하였습니다.\n고객 핸드폰번호 또는 문자 글자수를(45자 내) 확인해주세요.";
+			
+			JFXDialogLayout dialogLayout = new JFXDialogLayout();
+			JFXButton button = new JFXButton("OK");
+			JFXDialog dialog = new JFXDialog(pnStack, dialogLayout, JFXDialog.DialogTransition.TOP);
+			button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{dialog.close();});
+			
+			Text tt = new Text(alert);
+			tt.setFont(Font.font("Malgun Gothic"));
+			dialogLayout.setBody(tt);
+			dialogLayout.setActions(button);
+			dialog.show();
+		    pnSms.setVisible(false);
+			
+		}
+		
+		@FXML void handleCancelSms(ActionEvent event) {
+			pnSms.setVisible(false);
+			taSms.setText("");
+		}
+		
 	
 	//----------------------------------------기본 화면 구성------------------------------------------------------//
 
@@ -553,6 +563,7 @@ public class AdminController implements Initializable {
 		cbRecent.setOnAction(event->select(event));
 		btSms.setOnAction(event->goToSms(event));
 		btSend.setOnAction(event->handleSend(event));
+		btCancelSms.setOnAction(event->handleCancelSms(event));
 	}
 
 

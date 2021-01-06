@@ -329,7 +329,7 @@
                      <children>
                         <HBox alignment="BOTTOM_CENTER" layoutX="250.0" layoutY="100.0" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #fafaf4; -fx-border-style: solid;">
                            <children>
-                              <JFXTextArea fx:id="taSms" focusColor="#b38eb1" prefHeight="300.0" prefWidth="450.0" promptText="보내실 내용을 45자 내로 입력하세요.">
+                              <JFXTextArea fx:id="taSms" focusColor="#b38eb1" prefHeight="300.0" prefWidth="400.0" promptText="보내실 내용을 45자 내로 입력하세요.">
                                  <font>
                                     <Font name="Malgun Gothic" size="18.0" />
                                  </font>
@@ -343,6 +343,14 @@
                                  </font>
                                  <HBox.margin>
                                     <Insets bottom="30.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                              <JFXButton fx:id="btCancelSms" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="15.0" layoutX="565.0" layoutY="319.0" onAction="#handleCancelSms" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #b38eb1;" text="Cancel">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="30.0" left="30.0" right="30.0" />
                                  </HBox.margin>
                               </JFXButton>
                            </children>

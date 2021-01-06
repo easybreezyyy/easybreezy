@@ -157,7 +157,7 @@ public class ItemDAO {
 	 */
 	public void setItemList() {
 		sql.setLength(0);
-		sql.append("select * from items");
+		sql.append("select * from items order by stylenum");
 		try {
 			con = application.ConnUtil.getConnection();
 			pstmt = con.prepareStatement(sql.toString());

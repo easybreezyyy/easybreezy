@@ -11,6 +11,8 @@ import com.jfoenix.controls.JFXDialogLayout;
 
 import application.CollectTableVO;
 import application.DeliveryTableVO;
+import application.ItemDAO;
+import application.ItemVO;
 import application.MemberDAO;
 import application.RentalDAO;
 import application.ReturnDAO;
@@ -38,6 +40,7 @@ public class DeliverController implements Initializable{
 	MemberDAO memberdao = new MemberDAO();
 	RentalDAO rentaldao = new RentalDAO();
 	ReturnDAO returndao = new ReturnDAO();
+	ItemDAO itemdao = new ItemDAO();
 	String s = "배송 선택지";
 	String str = "수거 선택지";
 
@@ -126,6 +129,8 @@ public class DeliverController implements Initializable{
     @FXML
     void handleLogout(ActionEvent event) {
     	try {
+    		collectList.clear();
+    		deliveryList.clear();
     		loadMain();
     	} catch (IOException e) {
     		System.out.println("메인 패널 로딩 실패");
@@ -167,6 +172,8 @@ public class DeliverController implements Initializable{
     	
     	deliveryList.clear();
     	rentaldao.getDeliveryTable(s);
+    	tbDelivery.setItems(deliveryList);
+    	
     	
     	JFXDialogLayout dialogLayout = new JFXDialogLayout();
 		JFXButton button = new JFXButton("OK");
@@ -185,13 +192,22 @@ public class DeliverController implements Initializable{
     @FXML
     void handleCompleteCollect(ActionEvent event) {
     	CollectTableVO ct = tbCollect.getSelectionModel().getSelectedItem();
-    	String phone = ct.getPhone();
     	int no = ct.getRentalnum();
+    	String phone = ct.getPhone();
+    	rentaldao.updateStatus("완료", no);
+    	returndao.deleteData(no);
     	memberdao.updateStatus("-", phone);
-    	rentaldao.deleteData(no);
+    	
+    	//재고처리
+    	String stylenum = ct.getStylenum();
+    	ItemVO item = itemdao.getItem(stylenum);
+    	int stock = item.getStock();
+    	item.setStock(++stock);
+    	itemdao.updateItem(item);
     	
     	collectList.clear();
     	returndao.getCollectTable(str);
+    	tbCollect.setItems(collectList);
     	
     	JFXDialogLayout dialogLayout = new JFXDialogLayout();
 		JFXButton button = new JFXButton("OK");

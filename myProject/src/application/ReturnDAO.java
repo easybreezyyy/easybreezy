@@ -49,7 +49,7 @@ public class ReturnDAO {
 		RecentTableVO rt = null;
 		sql.setLength(0);
 		sql.append("select rentalnum, returnnum, to_char(returndate, 'RRRR/MM/DD') as returndate, "
-				+ "name, id, stylenum, status, address from returnlist " 
+				+ "name, id, stylenum, status, address, phone from returnlist " 
 				+ "where trunc(returndate) = trunc(sysdate)");
 		try {
 			con = application.ConnUtil.getConnection();
@@ -67,6 +67,7 @@ public class ReturnDAO {
 				rt.setReturnnum(rs.getInt("returnnum")); 
 				rt.setId(rs.getString("id"));
 				rt.setName(rs.getString("name"));
+				rt.setPhone(rs.getString("phone"));
 				
 				AdminController.recentList.add(rt);
 			}
@@ -80,7 +81,7 @@ public class ReturnDAO {
 	public void getOverdueTable() {
 		RecentTableVO rt = null;
 		sql.setLength(0);
-		sql.append("select rentalnum, address, status, stylenum, returnnum, id, name, "
+		sql.append("select rentalnum, address, status, stylenum, returnnum, id, name, phone, "
 				+ "to_char(returndate, 'RRRR/MM/DD') as returndate, "
 				+ "to_char(rentaldate, 'RRRR/MM/DD') as rentaldate from returnlist "
 				+ "where returndate < trunc(sysdate) "
@@ -102,6 +103,7 @@ public class ReturnDAO {
 				rt.setName(rs.getString("name"));
 				rt.setReturndate(rs.getString("returndate"));
 				rt.setRentaldate(rs.getString("rentaldate"));
+				rt.setPhone(rs.getString("phone"));
 				
 				AdminController.recentList.add(rt);
 			}
@@ -137,7 +139,7 @@ public class ReturnDAO {
 				ct.setRentalnum(rs.getInt("rentalnum"));
 				ct.setReturnnum(rs.getInt("returnnum"));
 				
-				System.out.println(ct);
+				//System.out.println(ct);
 				DeliverController.collectList.add(ct);
 			}
 		} catch (SQLException e) {
@@ -148,5 +150,27 @@ public class ReturnDAO {
 		}
 	}
 	
+	
+	/** Deliver - Collect - Complete 버튼 눌렀을 때
+	 * 반납 완료시 반납 테이블에서 데이터 삭제
+	 */
+	public int deleteData(int rentalnum) {
+		int i = 0;
+		sql.setLength(0);
+		sql.append("delete from returnlist where rentalnum = ?");
+		try {
+			con = application.ConnUtil.getConnection();
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setInt(1, rentalnum);
+			i = pstmt.executeUpdate();
+			System.out.println(i + "행이 삭제되었습니다.");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {application.ConnUtil.closeAll(con, pstmt, rs);}
+		
+		return i;
+		
+	}
 	
 }

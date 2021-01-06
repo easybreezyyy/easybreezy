@@ -12,6 +12,7 @@ public class RecentTableVO {
 	private String address;
 	private String returndate;
 	private String rentaldate;
+	private String phone;
 	
 	public String getRentaldate() {
 		return rentaldate;
@@ -66,6 +67,12 @@ public class RecentTableVO {
 	}
 	public void setRentalnum(Integer rentalnum) {
 		this.rentalnum = rentalnum;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 

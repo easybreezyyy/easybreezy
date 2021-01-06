@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -184,6 +182,13 @@ public class MainController implements Initializable {
 	public void handleGotoRegister(ActionEvent event) {
 		pnSignin.setVisible(false);
 		pnRegister.setVisible(true);
+		tfAddr.setText("");
+		tfCard.setText("");
+		tfConfrimPwd.setText("");
+		tfIdRegister.setText("");
+		tfName.setText("");
+		tfPhone.setText("");
+		tfPwdRegister.setText("");
 		tfIdRegister.requestFocus();
 		return;
 	}
