@@ -1,5 +1,10 @@
 # myProject - 미니프로젝트 - 의류 렌탈 프로그램
 
+-Language : Java
+-GUI : javaFX
+-DB : Oracle/sqldeveloper
+-IDE : Eclipse
+
 ### 주요기능
 1. 상품 대여
 2. 주문 내역 확인
